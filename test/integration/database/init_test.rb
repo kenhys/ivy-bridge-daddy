@@ -1,12 +1,12 @@
 require 'test_helper'
 require 'ivybridgedaddy/commands/database/init'
 
-class IvyBridgeDaddy::Commands::Database::InitTest < Minitest::Test
+class IvyBridgeDaddy::Commands::Database::InitTest < Test::Unit::TestCase
   def test_executes_ivybridgedaddy_database_help_init_command_successfully
-    output = `ivy-bridge-daddy database help init`
-    expect_output = <<-OUT
+    output = `bundle exec ivy-bridge-daddy database help init`
+    expected_output = <<-OUT
 Usage:
-  ivy-bridge-daddy init [PATH]
+  ivy-bridge-daddy database init [PATH]
 
 Options:
   -h, [--help], [--no-help]  # Display usage information

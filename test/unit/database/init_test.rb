@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'ivybridgedaddy/commands/database/init'
 
-class IvyBridgeDaddy::Commands::Database::InitTest < Minitest::Test
+class IvyBridgeDaddy::Commands::Database::InitTest < Test::Unit::TestCase
   def test_executes_database_init_command_successfully
     output = StringIO.new
     path = nil

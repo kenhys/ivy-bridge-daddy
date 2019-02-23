@@ -1,12 +1,12 @@
 require 'test_helper'
 require 'ivybridgedaddy/commands/config/init'
 
-class Ivybridgedaddy::Commands::Config::InitTest < Minitest::Test
+class IvyBridgeDaddy::Commands::Config::InitTest < Test::Unit::TestCase
   def test_executes_ivybridgedaddy_config_help_init_command_successfully
-    output = `ivybridgedaddy config help init`
-    expect_output = <<-OUT
+    output = `bundle exec ivy-bridge-daddy config help init`
+    expected_output = <<-OUT
 Usage:
-  ivybridgedaddy init PATH
+  ivy-bridge-daddy config init [PATH]
 
 Options:
   -h, [--help], [--no-help]  # Display usage information
