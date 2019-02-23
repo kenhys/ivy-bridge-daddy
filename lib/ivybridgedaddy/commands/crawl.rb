@@ -2,11 +2,12 @@
 
 require_relative '../command'
 
-module Ivybridgedaddy
+module IvyBridgeDaddy
   module Commands
     class Crawl < IvyBridgeDaddy::Command
-      def initialize(site,option, options)
-        @site,option = site,option
+      def initialize(site, task=nil, options)
+        @site = site
+        @task = task
         @options = options
       end
 

@@ -18,15 +18,15 @@ module IvyBridgeDaddy
     end
     map %w(--version -v) => :version
 
-    desc 'crawl SITE,OPTION', 'Command description...'
+    desc 'crawl SITE, [TASK]', 'Command description...'
     method_option :help, aliases: '-h', type: :boolean,
                          desc: 'Display usage information'
-    def crawl(site,option)
+    def crawl(site, task=nil)
       if options[:help]
         invoke :help, ['crawl']
       else
         require_relative 'commands/crawl'
-        IvyBridgeDaddy::Commands::Crawl.new(site,option, options).execute
+        IvyBridgeDaddy::Commands::Crawl.new(site, task, options).execute
       end
     end
 
