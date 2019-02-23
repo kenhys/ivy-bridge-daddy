@@ -18,6 +18,18 @@ module IvyBridgeDaddy
     end
     map %w(--version -v) => :version
 
+    desc 'crawl SITE,OPTION', 'Command description...'
+    method_option :help, aliases: '-h', type: :boolean,
+                         desc: 'Display usage information'
+    def crawl(site,option)
+      if options[:help]
+        invoke :help, ['crawl']
+      else
+        require_relative 'commands/crawl'
+        IvyBridgeDaddy::Commands::Crawl.new(site,option, options).execute
+      end
+    end
+
     require_relative 'commands/database'
     register IvyBridgeDaddy::Commands::Database, 'database', 'database [SUBCOMMAND]', 'Initialize database'
 
