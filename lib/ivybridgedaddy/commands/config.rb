@@ -2,21 +2,21 @@
 
 require 'thor'
 
-module Ivybridgedaddy
+module IvyBridgeDaddy
   module Commands
     class Config < Thor
 
       namespace :config
 
-      desc 'init PATH', 'Initialize configuration'
+      desc 'init [PATH]', 'Initialize configuration'
       method_option :help, aliases: '-h', type: :boolean,
                            desc: 'Display usage information'
-      def init(path)
+      def init(path=nil)
         if options[:help]
           invoke :help, ['init']
         else
           require_relative 'config/init'
-          Ivybridgedaddy::Commands::Config::Init.new(path, options).execute
+          IvyBridgeDaddy::Commands::Config::Init.new(path, options).execute
         end
       end
     end

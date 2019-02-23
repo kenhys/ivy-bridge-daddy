@@ -2,11 +2,11 @@
 
 require_relative '../../command'
 
-module Ivybridgedaddy
+module IvyBridgeDaddy
   module Commands
     class Config
-      class Init < Ivybridgedaddy::Command
-        def initialize(path, options)
+      class Init < IvyBridgeDaddy::Command
+        def initialize(path=nil, options)
           @path = path
           @options = options
         end
