@@ -1,12 +1,12 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "ivy/bridge/daddy/version"
+require "ivybridgedaddy/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "ivy-bridge-daddy"
   spec.license       = "MIT"
-  spec.version       = Ivy::Bridge::Daddy::VERSION
+  spec.version       = IvyBridgeDaddy::VERSION
   spec.authors       = ["Kentaro Hayashi"]
   spec.email         = ["kenhys@gmail.com"]
 
