@@ -18,6 +18,9 @@ module IvyBridgeDaddy
     end
     map %w(--version -v) => :version
 
+    require_relative 'commands/database'
+    register IvyBridgeDaddy::Commands::Database, 'database', 'database [SUBCOMMAND]', 'Initialize database'
+
     require_relative 'commands/config'
     register IvyBridgeDaddy::Commands::Config, 'config', 'config [SUBCOMMAND]', 'Initialize configuration'
   end
