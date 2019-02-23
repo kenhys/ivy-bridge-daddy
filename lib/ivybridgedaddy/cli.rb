@@ -17,5 +17,8 @@ module IvyBridgeDaddy
       puts "v#{IvyBridgeDaddy::VERSION}"
     end
     map %w(--version -v) => :version
+
+    require_relative 'commands/config'
+    register Ivybridgedaddy::Commands::Config, 'config', 'config [SUBCOMMAND]', 'Initialize configuration'
   end
 end
