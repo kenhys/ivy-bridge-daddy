@@ -1,10 +1,6 @@
-require "ivy/bridge/daddy/version"
+require "ivybridgedaddy/version"
 
-module Ivy
-  module Bridge
-    module Daddy
-      class Error < StandardError; end
-      # Your code goes here...
-    end
-  end
+module IvyBridgeDaddy
+  class Error < StandardError; end
+  # Your code goes here...
 end

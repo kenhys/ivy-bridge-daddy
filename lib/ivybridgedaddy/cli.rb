@@ -14,7 +14,7 @@ module IvyBridgeDaddy
     desc 'version', 'ivy-bridge-daddy version'
     def version
       require_relative 'version'
-      puts "v#{Ivy::Bridge::Daddy::VERSION}"
+      puts "v#{IvyBridgeDaddy::VERSION}"
     end
     map %w(--version -v) => :version
   end
