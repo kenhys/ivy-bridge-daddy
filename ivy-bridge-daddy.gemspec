@@ -58,6 +58,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "selenium-webdriver"
   spec.add_runtime_dependency "nokogiri", "~> 1.10.1"
+  spec.add_runtime_dependency "rroonga"
 
   spec.add_development_dependency "test-unit"
   spec.add_development_dependency "bundler", "~> 2.0"
