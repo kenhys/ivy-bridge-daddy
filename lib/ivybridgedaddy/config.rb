@@ -33,6 +33,8 @@ module IvyBridgeDaddy
     end
 
     def database_path
+      dir = File.join(home, "db")
+      Dir.mkdir(dir) unless Dir.exist?(dir)
       File.join(home, IVYBRIDGEDADDY_DB_FILE)
     end
 
