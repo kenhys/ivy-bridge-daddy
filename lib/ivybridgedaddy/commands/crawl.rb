@@ -51,6 +51,7 @@ module IvyBridgeDaddy
               item.find_elements(:class_name => "item-detail")[1].find_elements(:class_name => "bto_spec").each do |spec|
                 text = spec.text
                 if cpu?(text)
+                  cpu = text
                 elsif memory?(text)
                   memory = text
                 elsif storage?(text)
