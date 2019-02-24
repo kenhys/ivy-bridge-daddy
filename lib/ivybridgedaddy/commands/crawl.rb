@@ -39,6 +39,7 @@ module IvyBridgeDaddy
               detail = item.find_elements(:class_name => "item-detail")
               p item.find_elements(:class_name => "item-detail")[0].text
               p item.find_elements(:class_name => "item-detail")[1].text
+              url = item.find_element(:class_name => "product-review").find_element(:tag_name => "a").attribute("href")
               cpu = ""
               memory = ""
               storage = ""
@@ -75,6 +76,7 @@ module IvyBridgeDaddy
               end
               timestamp = Time.now
               data = {
+                url: url,
                 code: code,
                 catch_phrase: catch_phrase,
                 name: name,
