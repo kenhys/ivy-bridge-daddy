@@ -23,15 +23,25 @@ module IvyBridgeDaddy
         # Command logic goes here ...
         case @site
         when "pckoubou-model"
+          @crawler = PcKoubouCrawler.new
+          @crawler.update_models
+        end
+      end
+
+      class PcKoubouCrawler
+        def initialize
           options = Selenium::WebDriver::Firefox::Options.new
           #options.add_argument('-headless')
 
-          driver = Selenium::WebDriver.for :firefox, options: options
-          driver.navigate.to "https://www.pc-koubou.jp/pc/osless_desktop.php?pre=cmm_lde_205"
+          @driver = Selenium::WebDriver.for :firefox, options: options
+        end
+
+        def update_models
+          @driver.navigate.to "https://www.pc-koubou.jp/pc/osless_desktop.php?pre=cmm_lde_205"
 
           next_page = true
           while next_page
-            driver.find_elements(:class_name => "container-item").each do |item|
+            @driver.find_elements(:class_name => "container-item").each do |item|
               code = item.find_element(:class_name => "item-code").text
               catch_phrase = item.find_element(:class_name => "item-detail").text
               # item.find_element(:class_name => "product-name").text
@@ -107,94 +117,97 @@ module IvyBridgeDaddy
             end
           end
         end
-      end
 
-      def cpu?(text)
-        [
-          "Athlon 200GE",
-          "A6-9500",
-          "Celeron G4900",
-          "Ryzen 3 2200G",
-          "Ryzen 5 2400G",
-          "Core i3-8100",
-          "Core i5-8400",
-          "Core i5-9600K",
-          "Core i7-8700",
-          "Core i7-9700K",
-        ].include?(text)
-      end
+        def update_customs
+        end
 
-      def memory?(text)
-        [
-          "4GB(4GB×1)",
-          "8GB(4GB×2)",
-          "8GB(8GB×1)",
-          "16GB(8GB×2)",
-        ].include?(text)
-      end
+        def cpu?(text)
+          [
+            "Athlon 200GE",
+            "A6-9500",
+            "Celeron G4900",
+            "Ryzen 3 2200G",
+            "Ryzen 5 2400G",
+            "Core i3-8100",
+            "Core i5-8400",
+            "Core i5-9600K",
+            "Core i7-8700",
+            "Core i7-9700K",
+          ].include?(text)
+        end
 
-      def storage?(text)
-        [
-          "120GB Serial-ATA SSD",
-          "240GB Serial-ATA SSD",
-          "1TB Serial-ATA HDD",
-          "2TB Serial-ATA HDD",
-          "250GB ⇒ 512GB [インテル SSD 660p] NVMe対応 M.2 SSD ※0円アップグレード",
-        ].include?(text)
-      end
+        def memory?(text)
+          [
+            "4GB(4GB×1)",
+            "8GB(4GB×2)",
+            "8GB(8GB×1)",
+            "16GB(8GB×2)",
+          ].include?(text)
+        end
 
-      def graphic?(text)
-        [
-          "Radeon Vega 3 Graphics",
-          "Radeon Vega 8 Graphics",
-          "Radeon RX Vega 11 Graphics",
-          "Radeon R5 Graphics",
-          "UHD Graphics 610",
-          "UHD Graphics 630",
-          "GeForce GTX 1060 6GB GDDR5",
-          "GeForce GTX 1050 2GB GDDR5",
-          "GeForce GTX 1060 3GB GDDR5",
-          "GeForce RTX 2070 8GB GDDR6",
-          "GeForce RTX 2080 Ti 11GB GDDR6",
-        ].include?(text)
-      end
+        def storage?(text)
+          [
+            "120GB Serial-ATA SSD",
+            "240GB Serial-ATA SSD",
+            "1TB Serial-ATA HDD",
+            "2TB Serial-ATA HDD",
+            "250GB ⇒ 512GB [インテル SSD 660p] NVMe対応 M.2 SSD ※0円アップグレード",
+          ].include?(text)
+        end
 
-      def board?(text)
-        [
-          "AMD B350",
-          "インテル B360 Express",
-          "インテル Z390 Express",
-        ].include?(text)
-      end
+        def graphic?(text)
+          [
+            "Radeon Vega 3 Graphics",
+            "Radeon Vega 8 Graphics",
+            "Radeon RX Vega 11 Graphics",
+            "Radeon R5 Graphics",
+            "UHD Graphics 610",
+            "UHD Graphics 630",
+            "GeForce GTX 1060 6GB GDDR5",
+            "GeForce GTX 1050 2GB GDDR5",
+            "GeForce GTX 1060 3GB GDDR5",
+            "GeForce RTX 2070 8GB GDDR6",
+            "GeForce RTX 2080 Ti 11GB GDDR6",
+          ].include?(text)
+        end
 
-      def drive?(text)
-        [
-          "DVDスーパーマルチ",
-        ].include?(text)
-      end
+        def board?(text)
+          [
+            "AMD B350",
+            "インテル B360 Express",
+            "インテル Z390 Express",
+          ].include?(text)
+        end
 
-      def os?(text)
-        text.start_with?("OSなし")
-      end
+        def drive?(text)
+          [
+            "DVDスーパーマルチ",
+          ].include?(text)
+        end
 
-      def formfactor?(text)
-        [
-          "microATX",
-          "タワー / microATX",
-          "ミニタワー / microATX",
-          "スリムタイプ / microATX",
-          "ミドルタワー / ATX",
-        ].include?(text)
-      end
+        def os?(text)
+          text.start_with?("OSなし")
+        end
 
-      def power?(text)
-        [
-          "350W 80PLUS BRONZE認証 ATX電源",
-          "300W 80PLUS BRONZE認証 TFX電源",
-          "500W 80PLUS BRONZE認証 ATX電源",
-          "450W 80PLUS STANDARD認証 ATX電源",
-          "700W 80PLUS BRONZE認証 ATX電源",
-        ].include?(text)
+        def formfactor?(text)
+          [
+            "microATX",
+            "タワー / microATX",
+            "ミニタワー / microATX",
+            "スリムタイプ / microATX",
+            "ミドルタワー / ATX",
+          ].include?(text)
+        end
+
+        def power?(text)
+          [
+            "350W 80PLUS BRONZE認証 ATX電源",
+            "300W 80PLUS BRONZE認証 TFX電源",
+            "500W 80PLUS BRONZE認証 ATX電源",
+            "450W 80PLUS STANDARD認証 ATX電源",
+            "700W 80PLUS BRONZE認証 ATX電源",
+          ].include?(text)
+        end
       end
     end
   end
