@@ -88,6 +88,7 @@ module IvyBridgeDaddy
               end
               timestamp = Time.now
               data = {
+                maker: @site.downcase,
                 url: url,
                 code: code,
                 catch_phrase: catch_phrase,
