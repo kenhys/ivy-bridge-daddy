@@ -121,6 +121,7 @@ module IvyBridgeDaddy
         def update_customs
         end
 
+        private
         def cpu?(text)
           [
             "Athlon 200GE",
