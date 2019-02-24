@@ -20,16 +20,20 @@ module IvyBridgeDaddy
       end
 
       def execute(input: $stdin, output: $stdout)
-        # Command logic goes here ...
+        @crawler = PcKoubouCrawler.new
         case @site
         when "pckoubou-model"
-          @crawler = PcKoubouCrawler.new
           @crawler.update_models
+        when "pckoubou-custom"
+          @crawler.update_customs
         end
       end
 
       class PcKoubouCrawler
         def initialize
+          @models = Groonga["Models"]
+          @memories = Groonga["Memories"]
+          @specs = Groonga["Specs"]
           options = Selenium::WebDriver::Firefox::Options.new
           #options.add_argument('-headless')
 
@@ -120,9 +124,146 @@ module IvyBridgeDaddy
         end
 
         def update_customs
+          records = @models.select do |record|
+            record.maker == "pckoubou"
+          end
+          urls = {}
+          records.each do |record|
+            urls[record._key] = record.url
+          end
+          wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+          urls.each do |key, url|
+            p url
+            next if url == "https://www.pc-koubou.jp/products/detail.php?product_id=660964"
+            next if url == "https://www.pc-koubou.jp/products/detail.php?product_id=663878"
+            next if url == "https://www.pc-koubou.jp/products/detail.php?product_id=663906"
+            url = "https://www.pc-koubou.jp/products/detail.php?product_id=655751"
+            @driver.navigate.to(url)
+            wait.until do
+              @driver.find_element(:class_name => "bto_spec_basic").displayed?
+            end
+            @driver.find_element(:class_name => "bto_spec_basic") do |spec_basic|
+              spec_basic.find_elements(:tag_name => "div") do |spec|
+                memory_spec = spec.text
+                if memory_spec.start_with?("DDR")
+                  memory_spec =~ /\A(DDR.+?) \((.+?)\) (\d.+?)GB\((\d.+?)×(.+)\)$/
+                  memory_chip = $1
+                  memory_module = $2
+                  memory_total = $3.to_i
+                  module_size = $4.to_i
+                  module_count = $5.to_i
+                  @memories = Groonga["Memories"]
+                  data = {
+                    model: key,
+                    chip: memory_chip,
+                    module: memory_module,
+                    module_total: module_total,
+                    module_size: module_size,
+                    module_count: module_count
+                  }
+                  p key
+                  p data
+                  @memories[key] = data
+                end
+              end
+            end
+
+            model = ""
+            tab = @driver.find_element(:id => "tab-basic")
+            title = tab.find_element(:xpath => "div/div/div[@class='bold']")
+            model = title.text if title
+
+            wait.until do
+              @driver.find_element(:class_name => "p-custom").displayed?
+            end
+            @driver.find_elements(:class_name => "p-custom").each do |button|
+              button.click if button.displayed?
+            end
+            wait.until do
+              @driver.find_element(:class_name => "p-total-body").displayed?
+            end
+            total_body = @driver.find_element(:class_name => "p-total-body")
+            p total_body.text
+            total_price = extract_price(total_body.text)
+            p total_price
+            wait.until do
+              @driver.find_element(:class_name => "product-config").displayed?
+            end
+            @driver.find_elements(:class_name => "product-config").each do |product_config|
+              h3 = product_config.find_element(:tag_name => "h3")
+              if h3.text == "メインメモリ"
+                labels = product_config.find_elements(:xpath => "div/dl/dd/ul/li/label")
+                if labels
+                  labels.each do |label|
+                    price = label.find_element(:tag_name => "input").attribute("data-price").to_i
+                    description = label.find_element(:class => "p-radio-name").text
+                    p description
+                    p price
+
+                    description =~ /.*(DDR.+) (\d+?GB)×(\d)\(.*計(\d+?)GB\)/
+                    memory_chip = $1
+                    module_size = $2.to_i
+                    module_count = $3.to_i
+                    module_total = $4.to_i
+                    key = "#{model}_#{module_total}GB"
+                    data = {
+                      model: model,
+                      chip: memory_chip,
+                      module_size: module_size,
+                      module_count: module_count,
+                      module_total: module_total,
+                      price: price
+                    }
+                    p key
+                    p data
+                    @memories[key] = data
+                    spec = {
+                      model: model,
+                      memory: key,
+                      price: total_price + price,
+                    }
+                    @specs[key] = spec
+                  end
+                else
+                  # no options
+                  label = product_config.find_elements(:xpath => "div/dl/div/div[@class='p-fixed-name']")
+                  description = label.text
+                  description =~ /.*(DDR.+) (\d+?GB)×(\d)\(.*計(\d+?)GB\)/
+                  memory_chip = $1
+                  module_size = $2.to_i
+                  module_count = $3.to_i
+                  module_total = $4.to_i
+                  key = "#{model}_#{module_total}GB"
+                  p key
+                  data = {
+                    model: model,
+                    chip: memory_chip,
+                    module_size: module_size,
+                    module_count: module_count,
+                    module_total: module_total,
+                    price: 0
+                  }
+                  p data
+                  @memories[key] = data
+                  spec = {
+                    model: model,
+                    memory: key,
+                    price: total_price,
+                  }
+                  @specs[key] = spec
+                end
+              end
+            end
+            exit
+          end
         end
 
         private
+
+        def extract_price(text)
+          text.sub(/円/, '').sub(',', '').to_i
+        end
+
         def cpu?(text)
           [
             "Athlon 200GE",
