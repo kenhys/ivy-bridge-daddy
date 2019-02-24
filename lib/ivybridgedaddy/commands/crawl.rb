@@ -131,7 +131,7 @@ module IvyBridgeDaddy
           records.each do |record|
             urls[record._key] = record.url
           end
-          wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+          wait = Selenium::WebDriver::Wait.new(:timeout => 20)
           urls.each do |key, url|
             p url
             next if url == "https://www.pc-koubou.jp/products/detail.php?product_id=660964"
