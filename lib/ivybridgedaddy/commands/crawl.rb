@@ -22,7 +22,7 @@ module IvyBridgeDaddy
       def execute(input: $stdin, output: $stdout)
         # Command logic goes here ...
         case @site
-        when "pckoubou"
+        when "pckoubou-model"
           options = Selenium::WebDriver::Firefox::Options.new
           #options.add_argument('-headless')
 
