@@ -40,6 +40,8 @@ module IvyBridgeDaddy
               p item.find_elements(:class_name => "item-detail")[0].text
               p item.find_elements(:class_name => "item-detail")[1].text
               url = item.find_element(:class_name => "product-review").find_element(:tag_name => "a").attribute("href")
+              price_label = item.find_element(:class_name => "price").text
+              price = price_label.sub(/円\(税別\) ～/, '').sub(',', '').to_i
               cpu = ""
               memory = ""
               storage = ""
@@ -81,6 +83,7 @@ module IvyBridgeDaddy
                 catch_phrase: catch_phrase,
                 name: name,
                 detail: detail[1].text,
+                price: price,
                 cpu: cpu,
                 memory: memory,
                 storage: storage,
