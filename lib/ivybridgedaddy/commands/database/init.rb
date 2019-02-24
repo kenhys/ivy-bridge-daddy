@@ -80,12 +80,14 @@ module IvyBridgeDaddy
               table.integer("module_size")
               table.integer("module_count")
               table.integer("module_total")
+              table.integer("price")
             end
 
             schema.create_table("Specs", options = {:type => :patricia_trie}) do |table|
               table.reference("model", "Models")
               table.reference("cpu", "Cpus")
               table.reference("memory", "Memories")
+              table.integer("price")
               table.time("created_at")
               table.time("updated_at")
             end
