@@ -1,3 +1,4 @@
+# coding: utf-8
 # frozen_string_literal: true
 
 require_relative '../../command'
@@ -43,6 +44,7 @@ module IvyBridgeDaddy
             end
 
             schema.create_table("Models", options = {:type => :patricia_trie}) do |table|
+              table.reference("maker", "Makers")
               table.text("code")
               table.text("catch_phrase")
               table.text("name")
