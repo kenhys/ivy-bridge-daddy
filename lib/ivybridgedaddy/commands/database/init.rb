@@ -88,6 +88,11 @@ module IvyBridgeDaddy
               table.time("updated_at")
             end
 
+            @makers = Groonga["Makers"]
+            @makers["pckoubou"] = {
+              name: "パソコン工房",
+              url: "https://www.pc-koubou.jp/"
+            }
           end
 
         end
