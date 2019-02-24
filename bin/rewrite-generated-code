@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+require "fileutils"
+
+Dir.glob("**/*.rb") do |path|
+  if path.start_with?("test") or path.start_with?("lib")
+    content = File.read(path)
+    original = content.dup
+    content.gsub!(/class Ivybridgedaddy/, "class IvyBridgeDaddy")
+    content.gsub!(/module Ivybridgedaddy/, "module IvyBridgeDaddy")
+    content.gsub!(/Minitest::Test/, "Test::Unit::TestCase")
+    content.gsub!(/`ivybridgedaddy /, "`bundle exec ivy-bridge-daddy")
+    content.gsub!(/ ivybridgedaddy /, " ivy-bridge-daddy ")
+    content.gsub!(/Ivybridgedaddy::/, "IvyBridgeDaddy::")
+    if content != original
+      p path
+      puts content
+    end
+    File.open(path, "w+") do |file|
+      file.puts(content)
+    end
+  end
+end
+         
+
+
