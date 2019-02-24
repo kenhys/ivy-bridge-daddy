@@ -48,6 +48,7 @@ module IvyBridgeDaddy
               table.text("name")
               table.text("detail")
               table.text("url")
+              table.integer("price")
               table.reference("cpu", "Cpus")
               table.reference("memory", "Memories")
               table.reference("storage", "Storages")
