@@ -66,6 +66,20 @@ module IvyBridgeDaddy
             schema.create_table("Prices", options = {:type => :patricia_trie}) do |table|
             end
 
+            schema.create_table("MemoryChips", options = {:type => :patricia_trie}) do |table|
+            end
+            schema.create_table("MemoryModules", options = {:type => :patricia_trie}) do |table|
+            end
+
+            schema.change_table("Memories") do |table|
+              table.reference("model", "Models")
+              table.reference("chip", "MemoryChips")
+              table.reference("module", "MemoryModules")
+              table.integer("module_size")
+              table.integer("module_count")
+              table.integer("module_total")
+            end
+
             schema.create_table("Specs", options = {:type => :patricia_trie}) do |table|
               table.reference("model", "Models")
               table.reference("cpu", "Cpus")
