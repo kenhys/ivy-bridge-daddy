@@ -134,10 +134,6 @@ module IvyBridgeDaddy
           wait = Selenium::WebDriver::Wait.new(:timeout => 20)
           urls.each do |key, url|
             p url
-            next if url == "https://www.pc-koubou.jp/products/detail.php?product_id=660964"
-            next if url == "https://www.pc-koubou.jp/products/detail.php?product_id=663878"
-            next if url == "https://www.pc-koubou.jp/products/detail.php?product_id=663906"
-            url = "https://www.pc-koubou.jp/products/detail.php?product_id=655751"
             @driver.get(url)
             wait.until do
               @driver.find_element(:class_name => "bto_spec_basic").displayed?
@@ -253,7 +249,6 @@ module IvyBridgeDaddy
                 end
               end
             end
-            exit
           end
         end
 
