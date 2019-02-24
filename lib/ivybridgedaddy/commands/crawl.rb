@@ -138,7 +138,7 @@ module IvyBridgeDaddy
             next if url == "https://www.pc-koubou.jp/products/detail.php?product_id=663878"
             next if url == "https://www.pc-koubou.jp/products/detail.php?product_id=663906"
             url = "https://www.pc-koubou.jp/products/detail.php?product_id=655751"
-            @driver.navigate.to(url)
+            @driver.get(url)
             wait.until do
               @driver.find_element(:class_name => "bto_spec_basic").displayed?
             end
@@ -174,11 +174,10 @@ module IvyBridgeDaddy
             model = title.text if title
 
             wait.until do
-              @driver.find_element(:class_name => "p-custom").displayed?
+              @driver.find_elements(:class_name => "p-custom")[0].displayed?
             end
-            @driver.find_elements(:class_name => "p-custom").each do |button|
-              button.click if button.displayed?
-            end
+            button = @driver.find_elements(:class_name => "p-custom")[0]
+            button.click if button.displayed?
             wait.until do
               @driver.find_element(:class_name => "p-total-body").displayed?
             end
