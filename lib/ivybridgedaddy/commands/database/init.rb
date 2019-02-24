@@ -37,8 +37,6 @@ module IvyBridgeDaddy
             end
             schema.create_table("OperatingSystems", options = {:type => :patricia_trie}) do |table|
             end
-            schema.create_table("Cases", options = {:type => :patricia_trie}) do |table|
-            end
             schema.create_table("FormFactors", options = {:type => :patricia_trie}) do |table|
             end
             schema.create_table("Powers", options = {:type => :patricia_trie}) do |table|
@@ -49,6 +47,7 @@ module IvyBridgeDaddy
               table.text("catch_phrase")
               table.text("name")
               table.text("detail")
+              table.text("url")
               table.reference("cpu", "Cpus")
               table.reference("memory", "Memories")
               table.reference("storage", "Storages")
@@ -56,7 +55,6 @@ module IvyBridgeDaddy
               table.reference("board", "Boards")
               table.reference("drive", "Drives")
               table.reference("os", "OperatingSystems")
-              table.reference("case", "Cases")
               table.reference("formfactor", "FormFactors")
               table.reference("power", "Powers")
               table.time("created_at")
