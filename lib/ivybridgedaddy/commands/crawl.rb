@@ -22,10 +22,13 @@ module IvyBridgeDaddy
       def execute(input: $stdin, output: $stdout)
         @crawler = PcKoubouCrawler.new
         case @site
-        when "pckoubou-model"
-          @crawler.update_models
-        when "pckoubou-custom"
-          @crawler.update_customs
+        when "pckoubou"
+          case @task
+          when "model"
+            @crawler.update_models
+          when "custom"
+            @crawler.update_customs
+          end
         end
       end
 
