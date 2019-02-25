@@ -28,6 +28,19 @@ module IvyBridgeDaddy
             @crawler.update_models
           when "custom"
             @crawler.update_customs
+          else
+            if @task.start_with?("http")
+              records = @models.select do |record|
+                record.url =~ @task
+              end
+              model_urls = {}
+              records.each do |record|
+                model_urls[record._key] = record.url
+              end
+              @crawler.update_customs(model_urls)
+            else
+              @crawler.update_customs(@task)
+            end
           end
         end
       end
@@ -126,13 +139,14 @@ module IvyBridgeDaddy
           end
         end
 
-        def update_customs
-          records = @models.select do |record|
-            record.maker == "pckoubou"
-          end
-          urls = {}
-          records.each do |record|
-            urls[record._key] = record.url
+        def update_customs(urls=nil)
+          unless urls
+            records = @models.select do |record|
+              record.maker == @site
+            end
+            records.each do |record|
+              urls[record._key] = record.url
+            end
           end
           wait = Selenium::WebDriver::Wait.new(:timeout => 20)
           urls.each do |key, url|
@@ -220,6 +234,8 @@ module IvyBridgeDaddy
                       memory: key,
                       price: total_price + price,
                     }
+                    p key
+                    p spec
                     @specs[key] = spec
                   end
                 else
