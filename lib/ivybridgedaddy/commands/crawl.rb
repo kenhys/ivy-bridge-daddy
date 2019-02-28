@@ -6,6 +6,7 @@ require "selenium-webdriver"
 require_relative '../command'
 require_relative '../config'
 require_relative '../dbutil'
+require_relative '../pckoubou'
 
 module IvyBridgeDaddy
   module Commands
@@ -20,7 +21,7 @@ module IvyBridgeDaddy
       end
 
       def execute(input: $stdin, output: $stdout)
-        @crawler = PcKoubouCrawler.new
+        @crawler = ::IvyBridgeDaddy::Crawler::PcKoubouCrawler.new
         case @site
         when "pckoubou"
           case @task
