@@ -27,8 +27,7 @@ module IvyBridgeDaddy
             p item.find_elements(:class_name => "item-detail")[0].text
             p item.find_elements(:class_name => "item-detail")[1].text
             url = item.find_element(:class_name => "product-review").find_element(:tag_name => "a").attribute("href")
-            price_label = item.find_element(:class_name => "price").text
-            price = price_label.sub(/円\(税別\) ～/, '').sub(',', '').to_i
+            price = extract_price(item.find_element(:class_name => "price").text)
             cpu = ""
             memory = ""
             storage = ""
@@ -90,6 +89,10 @@ module IvyBridgeDaddy
           next_link = driver.find_element(:class_name => "page-next")
           next_link.click if next_link?(next_link)
         end
+      end
+
+      def extract_price(text)
+        text.sub(/円\(税別\) ～/, '').sub(',', '').to_i
       end
 
       def next_link?(tag)
