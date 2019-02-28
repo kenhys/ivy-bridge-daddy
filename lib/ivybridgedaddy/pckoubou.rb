@@ -17,6 +17,7 @@ module IvyBridgeDaddy
 
         next_page = true
         while next_page
+          next_page = false
           @driver.find_elements(:class_name => "container-item").each do |item|
             code = item.find_element(:class_name => "item-code").text
             catch_phrase = item.find_element(:class_name => "item-detail").text
@@ -87,12 +88,12 @@ module IvyBridgeDaddy
             @models[name] = data
           end
           next_link = driver.find_element(:class_name => "page-next")
-          if next_link.tag_name == "a"
-            next_link.click
-          else
-            next_page = false
-          end
+          next_link.click if next_link?(next_link)
         end
+      end
+
+      def next_link?(tag)
+        tag.tag_name == "a"
       end
 
       def update_customs(urls=nil)
