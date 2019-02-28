@@ -92,6 +92,7 @@ module IvyBridgeDaddy
         end
       end
 
+      private
       def extract_price(text)
         text.sub(/円\(税別\) ～/, '').sub(',', '').to_i
       end
