@@ -24,6 +24,9 @@ module IvyBridgeDaddy
             end
 
             schema.create_table("Cpus", options = {:type => :patricia_trie}) do |table|
+              table.integer("rank")
+            end
+            schema.create_table("CpuRanks", options = {:type => :patricia_trie}) do |table|
             end
             schema.create_table("Memories", options = {:type => :patricia_trie}) do |table|
             end
@@ -97,6 +100,24 @@ module IvyBridgeDaddy
               name: "パソコン工房",
               url: "https://www.pc-koubou.jp/"
             }
+            @cpuranks = Groonga["CpuRanks"]
+            data = {
+              "Celeron G4900" => 452,
+              "Core i7-3770" => 162,
+              "Ryzen 5 2400G" => 130,
+              "Ryzen 3 2200G" => 96,
+              "Core i3-8100" => 86,
+              "Core i5-8400" => 46,
+              "Core i7-8700" => 25,
+              "Core i5-9600K" => 24,
+              "Core i7-9700K" => 12,
+            }
+            data..each do |key,value|
+              @cpuranks[key] = {
+                cpu: key,
+                rank: value
+              }
+            end
           end
 
         end
