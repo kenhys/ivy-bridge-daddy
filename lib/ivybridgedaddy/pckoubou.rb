@@ -20,49 +20,6 @@ module IvyBridgeDaddy
         while next_page
           next_page = false
           @driver.find_elements(:class_name => "container-item").each do |item|
-            code = item.find_element(:class_name => "item-code").text
-            catch_phrase = item.find_element(:class_name => "item-detail").text
-            # item.find_element(:class_name => "product-name").text
-            name = item.find_element(:class_name => "item-name").text
-            detail = item.find_elements(:class_name => "item-detail")
-            p item.find_elements(:class_name => "item-detail")[0].text
-            p item.find_elements(:class_name => "item-detail")[1].text
-            url = item.find_element(:class_name => "product-review").find_element(:tag_name => "a").attribute("href")
-            price = extract_price(item.find_element(:class_name => "price").text)
-            cpu = ""
-            memory = ""
-            storage = ""
-            graphic = ""
-            board = ""
-            drive = ""
-            os = ""
-            formfactor = ""
-            power = ""
-            item.find_elements(:class_name => "item-detail")[1].find_elements(:class_name => "bto_spec").each do |spec|
-              text = spec.text
-              if cpu?(text)
-                cpu = text
-              elsif memory?(text)
-                memory = text
-              elsif storage?(text)
-                storage = text
-              elsif graphic?(text)
-                graphic = text
-              elsif board?(text)
-                board = text
-              elsif drive?(text)
-                drive = text
-              elsif os?(text)
-                os = text
-              elsif formfactor?(text)
-                formfactor = text
-              elsif power?(text)
-                power = text
-              else
-                p "|#{spec.text}|"
-                raise StandardError
-              end
-            end
             timestamp = Time.now
             data = {
               maker: @site.downcase,
@@ -322,6 +279,55 @@ module IvyBridgeDaddy
           "450W 80PLUS STANDARD認証 ATX電源",
           "700W 80PLUS BRONZE認証 ATX電源",
         ].include?(text)
+      end
+
+      def extract_model_spec(item)
+        specs = {
+          cpu: "",
+          memory: "",
+          storage: "",
+          graphic: "",
+          board: "",
+          drive: "",
+          os: "",
+          formfactor: "",
+          power: ""
+        }
+        code = item.find_element(:class_name => "item-code").text
+        catch_phrase = item.find_element(:class_name => "item-detail").text
+        # item.find_element(:class_name => "product-name").text
+        name = item.find_element(:class_name => "item-name").text
+        detail = item.find_elements(:class_name => "item-detail")
+        p item.find_elements(:class_name => "item-detail")[0].text
+        p item.find_elements(:class_name => "item-detail")[1].text
+        url = item.find_element(:class_name => "product-review").find_element(:tag_name => "a").attribute("href")
+        price = extract_price(item.find_element(:class_name => "price").text)
+        item.find_elements(:class_name => "item-detail")[1].find_elements(:class_name => "bto_spec").each do |spec|
+          text = spec.text
+          if cpu?(text)
+            specs[:cpu] = text
+          elsif memory?(text)
+            specs[:memory] = text
+          elsif storage?(text)
+            specs[:storage] = text
+          elsif graphic?(text)
+            specs[:graphic] = text
+          elsif board?(text)
+            specs[:board] = text
+          elsif drive?(text)
+            specs[:drive] = text
+          elsif os?(text)
+            specs[:os] = text
+          elsif formfactor?(text)
+            specs[:formfactor] = text
+          elsif power?(text)
+            specs[:power] = text
+          else
+            p "|#{spec.text}|"
+            raise StandardError
+          end
+        end
+        specs
       end
     end
   end
