@@ -92,15 +92,6 @@ module IvyBridgeDaddy
         end
       end
 
-      private
-      def extract_price(text)
-        text.sub(/円\(税別\) ～/, '').sub(',', '').to_i
-      end
-
-      def next_link?(tag)
-        tag.tag_name == "a"
-      end
-
       def update_customs(urls=nil)
         unless urls
           records = @models.select do |record|
@@ -233,6 +224,13 @@ module IvyBridgeDaddy
       end
 
       private
+      def extract_price(text)
+        text.sub(/円\(税別\) ～/, '').sub(',', '').to_i
+      end
+
+      def next_link?(tag)
+        tag.tag_name == "a"
+      end
 
       def extract_price(text)
         text.sub(/円/, '').sub(',', '').to_i
