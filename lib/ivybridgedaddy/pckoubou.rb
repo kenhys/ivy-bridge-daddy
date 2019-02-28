@@ -293,15 +293,15 @@ module IvyBridgeDaddy
           formfactor: "",
           power: ""
         }
-        code = item.find_element(:class_name => "item-code").text
-        catch_phrase = item.find_element(:class_name => "item-detail").text
+        specs[:code] = item.find_element(:class_name => "item-code").text
+        specs[:catch_phrase] = item.find_element(:class_name => "item-detail").text
         # item.find_element(:class_name => "product-name").text
-        name = item.find_element(:class_name => "item-name").text
-        detail = item.find_elements(:class_name => "item-detail")
+        specs[:name] = item.find_element(:class_name => "item-name").text
+        specs[:detail] = item.find_elements(:class_name => "item-detail")
         p item.find_elements(:class_name => "item-detail")[0].text
         p item.find_elements(:class_name => "item-detail")[1].text
-        url = item.find_element(:class_name => "product-review").find_element(:tag_name => "a").attribute("href")
-        price = extract_price(item.find_element(:class_name => "price").text)
+        specs[:url] = item.find_element(:class_name => "product-review").find_element(:tag_name => "a").attribute("href")
+        specs[:price] = extract_price(item.find_element(:class_name => "price").text)
         item.find_elements(:class_name => "item-detail")[1].find_elements(:class_name => "bto_spec").each do |spec|
           text = spec.text
           if cpu?(text)
