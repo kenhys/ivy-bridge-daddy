@@ -1,7 +1,7 @@
 # coding: utf-8
 module IvyBridgeDaddy
   module Crawler
-    class PcKoubouCrawler
+    class PcKoubou
       def initialize
         @models = Groonga["Models"]
         @memories = Groonga["Memories"]

@@ -21,7 +21,7 @@ module IvyBridgeDaddy
       end
 
       def execute(input: $stdin, output: $stdout)
-        @crawler = ::IvyBridgeDaddy::Crawler::PcKoubouCrawler.new
+        @crawler = ::IvyBridgeDaddy::Crawler::PcKoubou.new
         case @site
         when "pckoubou"
           case @task
