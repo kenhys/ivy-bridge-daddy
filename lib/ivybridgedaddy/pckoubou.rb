@@ -10,6 +10,7 @@ module IvyBridgeDaddy
         #options.add_argument('-headless')
 
         @driver = Selenium::WebDriver.for :firefox, options: options
+        @wait = Selenium::WebDriver::Wait.new(:timeout => 20)
       end
 
       def update_models
@@ -108,11 +109,10 @@ module IvyBridgeDaddy
             urls[record._key] = record.url
           end
         end
-        wait = Selenium::WebDriver::Wait.new(:timeout => 20)
         urls.each do |key, url|
           p url
           @driver.get(url)
-          wait.until do
+          @wait.until do
             @driver.find_element(:class_name => "bto_spec_basic").displayed?
           end
           @driver.find_element(:class_name => "bto_spec_basic") do |spec_basic|
@@ -146,19 +146,19 @@ module IvyBridgeDaddy
           title = tab.find_element(:xpath => "div/div/div[@class='bold']")
           model = title.text if title
 
-          wait.until do
+          @wait.until do
             @driver.find_elements(:class_name => "p-custom")[0].displayed?
           end
           button = @driver.find_elements(:class_name => "p-custom")[0]
           button.click if button.displayed?
-          wait.until do
+          @wait.until do
             @driver.find_element(:class_name => "p-total-body").displayed?
           end
           total_body = @driver.find_element(:class_name => "p-total-body")
           p total_body.text
           total_price = extract_price(total_body.text)
           p total_price
-          wait.until do
+          @wait.until do
             @driver.find_element(:class_name => "product-config").displayed?
           end
           @driver.find_elements(:class_name => "product-config").each do |product_config|
