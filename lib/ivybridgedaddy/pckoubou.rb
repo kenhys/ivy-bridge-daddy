@@ -20,27 +20,14 @@ module IvyBridgeDaddy
         while next_page
           next_page = false
           @driver.find_elements(:class_name => "container-item").each do |item|
+            specs = extract_model_spec(item)
             timestamp = Time.now
             data = {
               maker: @site.downcase,
-              url: url,
-              code: code,
-              catch_phrase: catch_phrase,
-              name: name,
-              detail: detail[1].text,
-              price: price,
-              cpu: cpu,
-              memory: memory,
-              storage: storage,
-              graphic: graphic,
-              board: board,
-              drive: drive,
-              os: os,
-              formfactor: formfactor,
-              power: power,
               created_at: timestamp,
               updated_at: timestamp
             }
+            data.merge!(specs)
             p data
             @models[name] = data
           end
