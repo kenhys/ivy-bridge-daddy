@@ -3,7 +3,7 @@ require 'ivybridgedaddy/commands/crawl'
 
 class IvyBridgeDaddy::Commands::CrawlTest < Test::Unit::TestCase
   def test_executes_ivybridgedaddy_help_crawl_command_successfully
-    output = `bundle exec ivy-bridge-daddyhelp crawl`
+    output = `bundle exec ivy-bridge-daddy help crawl`
     expected_output = <<-OUT
 Usage:
   ivy-bridge-daddy crawl [SITE,OPTION]
