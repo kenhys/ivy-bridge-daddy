@@ -248,7 +248,7 @@ module IvyBridgeDaddy
         specs = {
           chip: $1,
           module: $2,
-          module_total: $3.to_i
+          module_total: $3.to_i,
           module_size: $4.to_i,
           module_count: $5.to_i
         }
