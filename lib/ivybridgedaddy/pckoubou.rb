@@ -53,23 +53,13 @@ module IvyBridgeDaddy
           end
           @driver.find_element(:class_name => "bto_spec_basic") do |spec_basic|
             spec_basic.find_elements(:tag_name => "div") do |spec|
-              memory_spec = spec.text
-              if memory_spec.start_with?("DDR")
-                memory_spec =~ /\A(DDR.+?) \((.+?)\) (\d.+?)GB\((\d.+?)×(.+)\)$/
-                memory_chip = $1
-                memory_module = $2
-                memory_total = $3.to_i
-                module_size = $4.to_i
-                module_count = $5.to_i
+              if spec.text.start_with?("DDR")
+                specs = extract_memory_spec(spec.text)
                 @memories = Groonga["Memories"]
                 data = {
                   model: key,
-                  chip: memory_chip,
-                  module: memory_module,
-                  module_total: module_total,
-                  module_size: module_size,
-                  module_count: module_count
                 }
+                data.merge!(specs)
                 p key
                 p data
                 @memories[key] = data
@@ -266,6 +256,18 @@ module IvyBridgeDaddy
           "450W 80PLUS STANDARD認証 ATX電源",
           "700W 80PLUS BRONZE認証 ATX電源",
         ].include?(text)
+      end
+
+      def extract_memory_spec(text)
+        text =~ /\A(DDR.+?) \((.+?)\) (\d.+?)GB\((\d.+?)×(.+)\)$/
+        specs = {
+          chip: $1,
+          module: $2,
+          module_total: $3.to_i
+          module_size: $4.to_i,
+          module_count: $5.to_i
+        }
+        specs
       end
 
       def extract_model_spec(item)
