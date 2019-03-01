@@ -6,7 +6,7 @@ class IvyBridgeDaddy::Commands::CrawlTest < Test::Unit::TestCase
     output = `bundle exec ivy-bridge-daddy help crawl`
     expected_output = <<-OUT
 Usage:
-  ivy-bridge-daddy crawl [SITE,OPTION]
+  ivy-bridge-daddy crawl SITE [TASK]
 
 Options:
   -h, [--help], [--no-help]  # Display usage information
