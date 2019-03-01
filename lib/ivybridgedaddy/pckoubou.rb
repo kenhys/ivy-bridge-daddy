@@ -98,20 +98,13 @@ module IvyBridgeDaddy
                   p description
                   p price
 
-                  description =~ /.*(DDR.+) (\d+?GB)×(\d)\(.*計(\d+?)GB\)/
-                  memory_chip = $1
-                  module_size = $2.to_i
-                  module_count = $3.to_i
-                  module_total = $4.to_i
+                  memory_specs = extract_memory_spec(description)
                   key = "#{model}_#{module_total}GB"
                   data = {
                     model: model,
-                    chip: memory_chip,
-                    module_size: module_size,
-                    module_count: module_count,
-                    module_total: module_total,
                     price: price
                   }
+                  data.merge!(memory_specs)
                   p key
                   p data
                   @memories[key] = data
@@ -127,22 +120,14 @@ module IvyBridgeDaddy
               else
                 # no options
                 label = product_config.find_elements(:xpath => "div/dl/div/div[@class='p-fixed-name']")
-                description = label.text
-                description =~ /.*(DDR.+) (\d+?GB)×(\d)\(.*計(\d+?)GB\)/
-                memory_chip = $1
-                module_size = $2.to_i
-                module_count = $3.to_i
-                module_total = $4.to_i
+                memory_specs = extract_memory_spec(label.text)
                 key = "#{model}_#{module_total}GB"
                 p key
                 data = {
                   model: model,
-                  chip: memory_chip,
-                  module_size: module_size,
-                  module_count: module_count,
-                  module_total: module_total,
                   price: 0
                 }
+                data.merge!(memory_specs)
                 p data
                 @memories[key] = data
                 spec = {
