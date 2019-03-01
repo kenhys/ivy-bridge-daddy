@@ -7,6 +7,7 @@ require_relative '../command'
 require_relative '../config'
 require_relative '../dbutil'
 require_relative '../pckoubou'
+require_relative '../dospara'
 
 module IvyBridgeDaddy
   module Commands
@@ -21,9 +22,10 @@ module IvyBridgeDaddy
       end
 
       def execute(input: $stdin, output: $stdout)
-        @crawler = ::IvyBridgeDaddy::Crawler::PcKoubou.new
+        p @site
         case @site
         when "pckoubou"
+          @crawler = ::IvyBridgeDaddy::Crawler::PcKoubou.new
           case @task
           when "model"
             @crawler.update_models
@@ -42,6 +44,12 @@ module IvyBridgeDaddy
             else
               @crawler.update_customs(@task)
             end
+          end
+        when "dospara"
+          @crawler = ::IvyBridgeDaddy::Crawler::Dospara.new
+          case @task
+          when "basic-model"
+            @crawler.update_basic_models
           end
         end
       end
