@@ -28,7 +28,9 @@ module IvyBridgeDaddy
             data = {
               maker: "dospara",
               name: model,
+              catch_phrase: model,
               url: url,
+              detail: tbody.text,
               created_at: timestamp,
               updated_at: timestamp,
               price: price
