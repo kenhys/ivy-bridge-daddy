@@ -83,10 +83,7 @@ module IvyBridgeDaddy
       end
 
       def memory?(text)
-        [
-          "4GBメモリ",
-          "8GBメモリ"
-        ].include?(text)
+        text.include?("メモリ")
       end
 
       def storage?(text)
@@ -94,30 +91,17 @@ module IvyBridgeDaddy
       end
 
       def graphic?(text)
-        [
-          "Radeon Vega8",
-          "Radeon RX Vega11",
-          "Radeon R7",
-          "インテル UHD610",
-          "インテル UHD630",
-          "インテル UHDグラフィックス630",
-          "GeForce GT1030",
-          "GeForce GTX1050Ti",
-          "GeForce GTX1060 3GB",
-        ].include?(text)
+        text.include?("Radeon") or
+          text.include?("UHD") or
+          text.include?("GeForce")
       end
 
       def drive?(text)
-        [
-          "DVDスーパーマルチドライブ",
-        ].include?(text)
+        text.include?("DVDスーパーマルチドライブ")
       end
 
       def os?(text)
-        [
-          "Windows 10 Home",
-          "Windows 10 Pro",
-        ].include?(text)
+        text.include?("Windows")
       end
 
     end
