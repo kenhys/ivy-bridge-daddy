@@ -90,12 +90,7 @@ module IvyBridgeDaddy
       end
 
       def storage?(text)
-        [
-          "240GB SSD",
-          "256GB SSD",
-          "240GB SSD＋1TB HDD",
-          "1TB HDD"
-        ].include?(text)
+        text.include?("SSD") or text.include?("HDD")
       end
 
       def graphic?(text)
