@@ -18,7 +18,7 @@ module IvyBridgeDaddy
     end
     map %w(--version -v) => :version
 
-    desc 'crawl SITE, [TASK]', 'Command description...'
+    desc 'crawl SITE [TASK]', 'Command description...'
     method_option :help, aliases: '-h', type: :boolean,
                          desc: 'Display usage information'
     def crawl(site, task=nil)
