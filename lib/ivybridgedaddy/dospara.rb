@@ -76,19 +76,10 @@ module IvyBridgeDaddy
       end
 
       def cpu?(text)
-        [
-          "A6-9500",
-          "Celeron G4900",
-          "Ryzen 3 2200G",
-          "Ryzen 5 2400G",
-          "Core i3-8100",
-          "Core i5-8400",
-          "Core i5-8500",
-          "Core i5-9400F",
-          "Core i7-8700",
-          "Core i7-9700K",
-          "Core i9-9900K",
-        ].include?(text)
+        text.start_with?("Ryzen") or
+          text.start_with?("Celeron") or
+          text.start_with?("Ryzen") or
+          text.start_with?("A6")
       end
 
       def memory?(text)
