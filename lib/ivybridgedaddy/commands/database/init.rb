@@ -96,10 +96,16 @@ module IvyBridgeDaddy
             end
 
             @makers = Groonga["Makers"]
-            @makers["pckoubou"] = {
-              name: "パソコン工房",
-              url: "https://www.pc-koubou.jp/"
+            data = {
+              "パソコン工房" => "https://www.pc-koubou.jp/",
+              "ドスパラ" => "https://www.dospara.co.jp/"
             }
+            data.each do |key, value|
+              @makers["pckoubou"] = {
+                name: key,
+                url: value
+              }
+            end
             @cpuranks = Groonga["CpuRanks"]
             data = {
               "Celeron G4900" => 452,
