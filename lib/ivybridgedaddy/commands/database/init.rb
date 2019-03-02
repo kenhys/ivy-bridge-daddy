@@ -107,7 +107,7 @@ module IvyBridgeDaddy
               url: value
             }
           end
-          @cpuranks = Groonga["CpusRanks"]
+          @cpus = Groonga["Cpus"]
           data = {
             "Celeron G4900" => 452,
             "Core i7-3770" => 162,
@@ -119,9 +119,8 @@ module IvyBridgeDaddy
             "Core i5-9600K" => 24,
             "Core i7-9700K" => 12,
           }
-          data..each do |key,value|
-            @cpuranks[key] = {
-              cpu: key,
+          data.each do |key,value|
+            @cpus[key] = {
               rank: value
             }
           end
