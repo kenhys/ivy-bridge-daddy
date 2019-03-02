@@ -43,8 +43,9 @@ module IvyBridgeDaddy
 
       def update_customs(urls=nil)
         unless urls
+          urls = {}
           records = @models.select do |record|
-            record.maker == @site
+            record.maker == "pckoubou"
           end
           records.each do |record|
             urls[record._key] = record.url
