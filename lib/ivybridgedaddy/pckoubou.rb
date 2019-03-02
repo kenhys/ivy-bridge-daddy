@@ -250,14 +250,23 @@ module IvyBridgeDaddy
       end
 
       def extract_memory_spec(text)
-        text =~ /\A(DDR.+?) \((.+?)\) (\d.+?)GB\((\d.+?)×(.+)\)$/
-        specs = {
-          chip: $1,
-          module: $2,
-          module_total: $3.to_i,
-          module_size: $4.to_i,
-          module_count: $5.to_i
-        }
+        if text =~ /(DDR.+?) \((.+?)\) (\d.+?)GB\((\d.+?)×(.+)\)$/
+          specs = {
+            chip: $1,
+            module: $2,
+            module_total: $3.to_i,
+            module_size: $4.to_i,
+            module_count: $5.to_i
+          }
+        elsif text =~ /(DDR.+?) (\d+?)GB×(\d)\(.+\/計(\d)GB\).+\[(.+)\]/
+          specs = {
+            chip: $1,
+            module_size: $2.to_i,
+            module_count: $3.to_i,
+            module_total: $4.to_i,
+            price: $5
+          }
+        end
         specs
       end
 
