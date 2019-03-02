@@ -299,7 +299,7 @@ module IvyBridgeDaddy
           elsif drive?(text)
             specs[:drive] = text
           elsif os?(text)
-            specs[:os] = text
+            specs[:os] = "OSなし"
           elsif formfactor?(text)
             specs[:formfactor] = text
           elsif power?(text)
