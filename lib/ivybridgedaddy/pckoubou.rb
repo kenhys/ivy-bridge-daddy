@@ -258,7 +258,7 @@ module IvyBridgeDaddy
             module_size: $4.to_i,
             module_count: $5.to_i
           }
-        elsif text =~ /(DDR.+?) (\d+?)GB×(\d)\(.+\/計(\d)GB\).+\[(.+)\]/
+        elsif text =~ /(DDR.+?) (\d+?)GB×(\d)\(.+\/計(\d)GB\).+\[(.+)円\]/
           specs = {
             chip: $1,
             module_size: $2.to_i,
