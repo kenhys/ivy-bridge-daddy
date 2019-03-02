@@ -10,7 +10,8 @@ module IvyBridgeDaddy
         #options.add_argument('-headless')
 
         @client = Selenium::WebDriver::Remote::Http::Default.new
-        @client.timeout = 120
+        @client.read_timeout = 120
+        @client.open_timeout = 120
 
         @driver = Selenium::WebDriver.for :firefox, :http_client => @client, options: options 
         @wait = Selenium::WebDriver::Wait.new(:timeout => 60)
