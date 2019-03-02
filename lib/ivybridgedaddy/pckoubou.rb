@@ -105,7 +105,7 @@ module IvyBridgeDaddy
                   p price
 
                   memory_specs = extract_memory_spec(description)
-                  key = "#{model}_#{module_total}GB"
+                  key = "#{model}_#{memory_specs[:module_total]}GB"
                   data = {
                     model: model,
                     price: price
