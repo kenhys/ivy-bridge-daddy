@@ -34,7 +34,7 @@ module IvyBridgeDaddy
             }
             data.merge!(specs)
             p data
-            @models[name] = data
+            @models[specs[:name]] = data
           end
           next_link = driver.find_element(:class_name => "page-next")
           next_link.click if next_link?(next_link)
