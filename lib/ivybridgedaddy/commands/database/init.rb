@@ -94,6 +94,7 @@ module IvyBridgeDaddy
               table.time("created_at")
               table.time("updated_at")
             end
+          end
 
             @makers = Groonga["Makers"]
             data = {
@@ -124,7 +125,6 @@ module IvyBridgeDaddy
                 rank: value
               }
             end
-          end
 
         end
       end
