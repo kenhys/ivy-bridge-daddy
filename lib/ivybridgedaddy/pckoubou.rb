@@ -36,7 +36,7 @@ module IvyBridgeDaddy
             p data
             @models[specs[:name]] = data
           end
-          next_link = driver.find_element(:class_name => "page-next")
+          next_link = @driver.find_element(:class_name => "page-next")
           next_link.click if next_link?(next_link)
         end
       end
