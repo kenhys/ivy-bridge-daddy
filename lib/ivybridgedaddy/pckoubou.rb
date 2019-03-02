@@ -23,7 +23,7 @@ module IvyBridgeDaddy
             specs = extract_model_spec(item)
             timestamp = Time.now
             data = {
-              maker: @site.downcase,
+              maker: "pckoubou",
               created_at: timestamp,
               updated_at: timestamp
             }
