@@ -96,35 +96,35 @@ module IvyBridgeDaddy
             end
           end
 
-            @makers = Groonga["Makers"]
-            data = {
-              "パソコン工房" => "https://www.pc-koubou.jp/",
-              "ドスパラ" => "https://www.dospara.co.jp/"
+          @makers = Groonga["Makers"]
+          data = {
+            "パソコン工房" => "https://www.pc-koubou.jp/",
+            "ドスパラ" => "https://www.dospara.co.jp/"
+          }
+          data.each do |key, value|
+            @makers["pckoubou"] = {
+              name: key,
+              url: value
             }
-            data.each do |key, value|
-              @makers["pckoubou"] = {
-                name: key,
-                url: value
-              }
-            end
-            @cpuranks = Groonga["CpuRanks"]
-            data = {
-              "Celeron G4900" => 452,
-              "Core i7-3770" => 162,
-              "Ryzen 5 2400G" => 130,
-              "Ryzen 3 2200G" => 96,
-              "Core i3-8100" => 86,
-              "Core i5-8400" => 46,
-              "Core i7-8700" => 25,
-              "Core i5-9600K" => 24,
-              "Core i7-9700K" => 12,
+          end
+          @cpuranks = Groonga["CpusRanks"]
+          data = {
+            "Celeron G4900" => 452,
+            "Core i7-3770" => 162,
+            "Ryzen 5 2400G" => 130,
+            "Ryzen 3 2200G" => 96,
+            "Core i3-8100" => 86,
+            "Core i5-8400" => 46,
+            "Core i7-8700" => 25,
+            "Core i5-9600K" => 24,
+            "Core i7-9700K" => 12,
+          }
+          data..each do |key,value|
+            @cpuranks[key] = {
+              cpu: key,
+              rank: value
             }
-            data..each do |key,value|
-              @cpuranks[key] = {
-                cpu: key,
-                rank: value
-              }
-            end
+          end
 
         end
       end
