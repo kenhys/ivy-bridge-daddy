@@ -9,8 +9,12 @@ module IvyBridgeDaddy
         options = Selenium::WebDriver::Firefox::Options.new
         #options.add_argument('-headless')
 
-        @driver = Selenium::WebDriver.for :firefox, options: options
+        @client = Selenium::WebDriver::Remote::Http::Default.new
+        @client.timeout = 120
+
+        @driver = Selenium::WebDriver.for :firefox, :http_client => @client, options: options 
         @wait = Selenium::WebDriver::Wait.new(:timeout => 60)
+
       end
 
       def update_models
