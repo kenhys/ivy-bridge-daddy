@@ -10,7 +10,7 @@ module IvyBridgeDaddy
         #options.add_argument('-headless')
 
         @driver = Selenium::WebDriver.for :firefox, options: options
-        @wait = Selenium::WebDriver::Wait.new(:timeout => 20)
+        @wait = Selenium::WebDriver::Wait.new(:timeout => 60)
       end
 
       def update_models
