@@ -276,7 +276,7 @@ module IvyBridgeDaddy
         specs[:catch_phrase] = item.find_element(:class_name => "item-detail").text
         # item.find_element(:class_name => "product-name").text
         name = item.find_element(:class_name => "item-name").text
-        name = name.sub(/SALE/, "").sub(/NEW/, "")
+        name = name.sub(/\nSALE/, "").sub(/\nNEW/, "")
         specs[:name] = name
         details = item.find_elements(:class_name => "item-detail")
         specs[:detail] = details[1].text
