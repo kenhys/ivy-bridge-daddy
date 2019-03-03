@@ -110,6 +110,10 @@ module IvyBridgeDaddy
                   p price
 
                   memory_specs = extract_memory_spec(description)
+                  if memory_specs.empty?
+                    p memory_specs
+                    raise StandardError
+                  end
                   key = "#{model}_#{memory_specs[:module_total]}GB"
                   data = {
                     model: model,
