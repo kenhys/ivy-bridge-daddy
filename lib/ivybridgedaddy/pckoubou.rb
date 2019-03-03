@@ -242,7 +242,7 @@ module IvyBridgeDaddy
           if cpu?(text)
             specs[:cpu] = text
           elsif memory?(text)
-            specs[:memory] = text
+            specs[:memory] = text.sub(/\(.+?\)/, '')
           elsif storage?(text)
             specs[:storage] = text.sub(/Serial-ATA /, '')
           elsif graphic?(text)
