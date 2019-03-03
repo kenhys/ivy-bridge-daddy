@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
+require "thor"
 require_relative '../../command'
 
 module IvyBridgeDaddy
   module Commands
-    class Config
+    class Config < Thor
       class Init < IvyBridgeDaddy::Command
         def initialize(path=nil, options)
           @path = path

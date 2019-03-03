@@ -1,13 +1,14 @@
 # coding: utf-8
 # frozen_string_literal: true
 
+require "thor"
 require_relative '../../command'
 require_relative '../../config'
 require_relative '../../dbutil'
 
 module IvyBridgeDaddy
   module Commands
-    class Database
+    class Database < Thor
       class Init < IvyBridgeDaddy::Command
         def initialize(path, options)
           @path = path
