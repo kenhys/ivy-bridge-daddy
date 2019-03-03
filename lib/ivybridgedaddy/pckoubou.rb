@@ -1,7 +1,9 @@
 # coding: utf-8
+require _relative "cralwer"
+
 module IvyBridgeDaddy
   module Crawler
-    class PcKoubou
+    class PcKoubou < BaseClawler
       def initialize
         @models = Groonga["Models"]
         @memories = Groonga["Memories"]
@@ -164,53 +166,12 @@ module IvyBridgeDaddy
         text.sub(/円/, '').sub(',', '').to_i
       end
 
-      def cpu?(text)
-        [
-          "Athlon 200GE",
-          "A6-9500",
-          "Celeron G4900",
-          "Ryzen 3 2200G",
-          "Ryzen 5 2400G",
-          "Core i3-8100",
-          "Core i5-8400",
-          "Core i5-9600K",
-          "Core i7-8700",
-          "Core i7-9700K",
-        ].include?(text)
-      end
-
       def memory?(text)
         [
           "4GB(4GB×1)",
           "8GB(4GB×2)",
           "8GB(8GB×1)",
           "16GB(8GB×2)",
-        ].include?(text)
-      end
-
-      def storage?(text)
-        [
-          "120GB Serial-ATA SSD",
-          "240GB Serial-ATA SSD",
-          "1TB Serial-ATA HDD",
-          "2TB Serial-ATA HDD",
-          "250GB ⇒ 512GB [インテル SSD 660p] NVMe対応 M.2 SSD ※0円アップグレード",
-        ].include?(text)
-      end
-
-      def graphic?(text)
-        [
-          "Radeon Vega 3 Graphics",
-          "Radeon Vega 8 Graphics",
-          "Radeon RX Vega 11 Graphics",
-          "Radeon R5 Graphics",
-          "UHD Graphics 610",
-          "UHD Graphics 630",
-          "GeForce GTX 1060 6GB GDDR5",
-          "GeForce GTX 1050 2GB GDDR5",
-          "GeForce GTX 1060 3GB GDDR5",
-          "GeForce RTX 2070 8GB GDDR6",
-          "GeForce RTX 2080 Ti 11GB GDDR6",
         ].include?(text)
       end
 
@@ -222,16 +183,6 @@ module IvyBridgeDaddy
         ].include?(text)
       end
 
-      def drive?(text)
-        [
-          "DVDスーパーマルチ",
-        ].include?(text)
-      end
-
-      def os?(text)
-        text.start_with?("OSなし")
-      end
-
       def formfactor?(text)
         [
           "microATX",
@@ -239,16 +190,6 @@ module IvyBridgeDaddy
           "ミニタワー / microATX",
           "スリムタイプ / microATX",
           "ミドルタワー / ATX",
-        ].include?(text)
-      end
-
-      def power?(text)
-        [
-          "350W 80PLUS BRONZE認証 ATX電源",
-          "300W 80PLUS BRONZE認証 TFX電源",
-          "500W 80PLUS BRONZE認証 ATX電源",
-          "450W 80PLUS STANDARD認証 ATX電源",
-          "700W 80PLUS BRONZE認証 ATX電源",
         ].include?(text)
       end
 
