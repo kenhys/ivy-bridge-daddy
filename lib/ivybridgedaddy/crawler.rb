@@ -36,12 +36,9 @@ module IvyBridgeDaddy
       end
 
       def power?(text)
-        [
-          "ATX電源",
-          "TFX電源",
-        ].include?(text)
+        text.include?("ATX電源") or
+          text.include?("TFX電源")
       end
-
     end
   end
 end
