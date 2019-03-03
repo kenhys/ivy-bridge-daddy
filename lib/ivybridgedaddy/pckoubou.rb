@@ -184,13 +184,13 @@ module IvyBridgeDaddy
       end
 
       def formfactor?(text)
-        [
-          "microATX",
-          "タワー / microATX",
-          "ミニタワー / microATX",
-          "スリムタイプ / microATX",
-          "ミドルタワー / ATX",
-        ].include?(text)
+        text.include?("microATX") or
+          text.include?("Mini-ITX") or
+          text.include?("ATX") or
+          text.include?("タワー") or
+          text.include?("ミニタワー") or
+          text.include?("スリムタイプ") or
+          text.include?("ミドルタワー")
       end
 
       def extract_memory_spec(text)
