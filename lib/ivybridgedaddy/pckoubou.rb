@@ -218,7 +218,7 @@ module IvyBridgeDaddy
             module_size: $2.to_i,
             module_count: $3.to_i,
             module_total: $4.to_i,
-            price: $5
+            price: $5.sub(/,/, '').to_i
           }
         elsif text =~ /(DDR.+?) (\d+?)GB×(\d)\(計(\d)GB\).+\[(.+)円\]/
           specs = {
