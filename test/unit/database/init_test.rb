@@ -10,6 +10,6 @@ class IvyBridgeDaddy::Commands::Database::InitTest < Test::Unit::TestCase
 
     command.execute(output: output)
 
-    assert_equal "OK\n", output.string
+    assert_equal "", output.string
   end
 end
