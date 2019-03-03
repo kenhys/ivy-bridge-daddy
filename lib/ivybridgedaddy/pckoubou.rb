@@ -64,7 +64,7 @@ module IvyBridgeDaddy
           end
           @driver.find_element(:class_name => "bto_spec_basic") do |spec_basic|
             spec_basic.find_elements(:tag_name => "div") do |spec|
-              if spec.text.start_with?("DDR")
+              if spec.text.include?("DDR")
                 specs = extract_memory_spec(spec.text)
                 @memories = Groonga["Memories"]
                 data = {
