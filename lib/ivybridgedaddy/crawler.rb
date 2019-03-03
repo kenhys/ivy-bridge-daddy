@@ -8,7 +8,8 @@ module IvyBridgeDaddy
           text.start_with?("Celeron") or
           text.start_with?("Ryzen") or
           text.start_with?("A6") or
-          text.start_with?("Athlon")
+          text.start_with?("Athlon") or
+          text.start_with?("Core")
       end
 
       def memory?(text)
