@@ -265,7 +265,7 @@ module IvyBridgeDaddy
           elsif storage?(text)
             specs[:storage] = text.sub(/Serial-ATA /, '')
           elsif graphic?(text)
-            specs[:graphic] = text.sub(/ Graphics/, '')/
+            specs[:graphic] = text.sub(/ Graphics/, '').strip
           elsif board?(text)
             specs[:board] = text
           elsif drive?(text)
