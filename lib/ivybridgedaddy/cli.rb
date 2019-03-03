@@ -18,6 +18,18 @@ module IvyBridgeDaddy
     end
     map %w(--version -v) => :version
 
+    desc 'search QUERY', 'Command description...'
+    method_option :help, aliases: '-h', type: :boolean,
+                         desc: 'Display usage information'
+    def search(query)
+      if options[:help]
+        invoke :help, ['search']
+      else
+        require_relative 'commands/search'
+        IvyBridgeDaddy::Commands::Search.new(query, options).execute
+      end
+    end
+
     desc 'crawl SITE [TASK]', 'Command description...'
     method_option :help, aliases: '-h', type: :boolean,
                          desc: 'Display usage information'
