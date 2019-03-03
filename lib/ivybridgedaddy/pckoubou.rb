@@ -193,6 +193,7 @@ module IvyBridgeDaddy
       end
 
       def extract_memory_spec(text)
+        specs = {}
         if text =~ /(DDR.+?) \((.+?)\) (\d.+?)GB\((\d.+?)×(.+)\)$/
           specs = {
             chip: $1,
