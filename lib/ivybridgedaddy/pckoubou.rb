@@ -66,14 +66,20 @@ module IvyBridgeDaddy
             spec_basic.find_elements(:tag_name => "div") do |spec|
               if spec.text.include?("DDR")
                 specs = extract_memory_spec(spec.text)
-                @memories = Groonga["Memories"]
-                data = {
-                  model: key,
-                }
-                data.merge!(specs)
-                p key
-                p data
-                @memories[key] = data
+                p specs
+                if specs.empty?
+                  p text
+                  raise StandardError
+                end
+                if @memories = Groonga["Memories"]
+                  data = {
+                    model: key,
+                  }
+                  data.merge!(specs)
+                  p key
+                  p data
+                  @memories[key] = data
+                end
               end
             end
           end
