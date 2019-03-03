@@ -258,6 +258,7 @@ module IvyBridgeDaddy
           elsif power?(text)
             specs[:power] = text
           else
+            next if name == "STYLE-I0B6-i5T-UHS [OS LESS]" and text == "160W"
             p "|#{spec.text}|"
             raise StandardError
           end
