@@ -58,7 +58,7 @@ module IvyBridgeDaddy
           elsif cpu?(text)
             specs[:cpu] = td.text
           elsif memory?(text)
-            specs[:memory] = text
+            specs[:memory] = text.sub(/メモリ/, '')
           elsif storage?(text)
             specs[:storage] = text
           elsif graphic?(text)
