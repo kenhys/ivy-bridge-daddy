@@ -66,7 +66,10 @@ module IvyBridgeDaddy
             when "インテル UHDグラフィックス630",
               specs[:graphic] = "UHD 630"
             else
-              specs[:graphic] = text.sub(/インテル /, '').sub(/UHD/, 'UHD ')
+              text.sub!(/インテル /, "")
+              text.sub!(/Vega(\d+)/, 'Vega \1')
+              text.sub!(/UHD/, "UHD ")
+              specs[:graphic] = text.strip
             end
           elsif drive?(text)
             case text
