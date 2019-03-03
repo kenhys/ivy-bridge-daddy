@@ -1,5 +1,5 @@
 # coding: utf-8
-require_relative "crawler"
+require_relative "./crawler"
 
 module IvyBridgeDaddy
   module Crawler
