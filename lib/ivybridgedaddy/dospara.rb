@@ -69,7 +69,12 @@ module IvyBridgeDaddy
               specs[:graphic] = text.sub(/インテル /, '')
             end
           elsif drive?(text)
-            specs[:drive] = text
+            case text
+            when "光学ドライブ無し"
+              specs[:drive] = "なし"
+            else
+              specs[:drive] = text.sub(/ドライブ/, '')
+            end
           end
         end
         specs
