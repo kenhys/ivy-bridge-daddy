@@ -3,7 +3,7 @@ require_relative "./crawler"
 
 module IvyBridgeDaddy
   module Crawler
-    class PcKoubou < BaseClawler
+    class PcKoubou < BaseCrawler
       def initialize
         @models = Groonga["Models"]
         @memories = Groonga["Memories"]
