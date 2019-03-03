@@ -98,14 +98,22 @@ module IvyBridgeDaddy
 
           @makers = Groonga["Makers"]
           data = {
-            "パソコン工房" => "https://www.pc-koubou.jp/",
-            "ドスパラ" => "https://www.dospara.co.jp/"
-          }
-          data.each do |key, value|
-            @makers["pckoubou"] = {
-              name: key,
-              url: value
+            "pckoubou" => {
+              "パソコン工房" => "https://www.pc-koubou.jp/",
+            },
+            "dospara" => {
+              "ドスパラ" => "https://www.dospara.co.jp/"
             }
+          }
+          data.keys.each do |maker|
+            print "Initialize database for #{maker} "
+            data[maker].each do |key, value|
+              puts "#{key}: #{value}"
+              @makers[maker] = {
+                name: key,
+                url: value
+              }
+            end
           end
           @cpus = Groonga["Cpus"]
           data = {
