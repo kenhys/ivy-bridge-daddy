@@ -28,7 +28,8 @@ module IvyBridgeDaddy
       end
 
       def drive?(text)
-        text.include?("DVDスーパーマルチ")
+        text.include?("DVDスーパーマルチ") or
+          text.include?("光学ドライブ無し")
       end
 
       def os?(text)
