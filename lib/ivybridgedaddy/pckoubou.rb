@@ -244,7 +244,7 @@ module IvyBridgeDaddy
           elsif memory?(text)
             specs[:memory] = text
           elsif storage?(text)
-            specs[:storage] = text
+            specs[:storage] = text.sub(/Serial-ATA /, '')
           elsif graphic?(text)
             specs[:graphic] = text
           elsif board?(text)
