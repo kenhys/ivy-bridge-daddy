@@ -1,7 +1,9 @@
 # coding: utf-8
+require_relative "crawler"
+
 module IvyBridgeDaddy
   module Crawler
-    class Dospara
+    class Dospara < BaseCrawler
       def initialize
         @models = Groonga["Models"]
         @memories = Groonga["Memories"]
@@ -77,33 +79,8 @@ module IvyBridgeDaddy
         text.sub(/円\(\+税\)/, '').sub(',', '').to_i
       end
 
-      def cpu?(text)
-        text.start_with?("Ryzen") or
-          text.start_with?("Celeron") or
-          text.start_with?("Ryzen") or
-          text.start_with?("A6")
-      end
-
       def memory?(text)
         text.include?("メモリ")
-      end
-
-      def storage?(text)
-        text.include?("SSD") or text.include?("HDD")
-      end
-
-      def graphic?(text)
-        text.include?("Radeon") or
-          text.include?("UHD") or
-          text.include?("GeForce")
-      end
-
-      def drive?(text)
-        text.include?("DVDスーパーマルチドライブ")
-      end
-
-      def os?(text)
-        text.include?("Windows")
       end
 
     end
