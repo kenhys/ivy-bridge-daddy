@@ -186,7 +186,6 @@ module IvyBridgeDaddy
       def formfactor?(text)
         text.include?("microATX") or
           text.include?("Mini-ITX") or
-          text.include?("ATX") or
           text.include?("タワー") or
           text.include?("ミニタワー") or
           text.include?("スリムタイプ") or
