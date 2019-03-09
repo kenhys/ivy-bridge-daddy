@@ -33,14 +33,7 @@ module IvyBridgeDaddy
             @crawler.update_customs
           else
             if @task.start_with?("http")
-              records = @models.select do |record|
-                record.url =~ @task
-              end
-              model_urls = {}
-              records.each do |record|
-                model_urls[record._key] = record.url
-              end
-              @crawler.update_customs(model_urls)
+              @crawler.update_customs(model_urls(@task))
             else
               @crawler.update_customs(@task)
             end
@@ -52,6 +45,19 @@ module IvyBridgeDaddy
             @crawler.update_basic_models
           end
         end
+      end
+
+      private
+
+      def model_urls(url)
+        records = @models.select do |record|
+          record.url =~ url
+        end
+        model_urls = {}
+        records.each do |record|
+          model_urls[record._key] = record.url
+        end
+        model_urls
       end
 
     end
