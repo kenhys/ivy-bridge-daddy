@@ -186,11 +186,8 @@ module IvyBridgeDaddy
       end
 
       def board?(text)
-        [
-          "AMD B350",
-          "インテル B360 Express",
-          "インテル Z390 Express",
-        ].include?(text)
+        text.include?("AMD") or
+          text.include?("Express")
       end
 
       def formfactor?(text)
