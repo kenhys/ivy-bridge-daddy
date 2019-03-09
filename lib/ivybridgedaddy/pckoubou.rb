@@ -264,7 +264,7 @@ module IvyBridgeDaddy
           elsif graphic?(text)
             specs[:graphic] = text.sub(/ Graphics/, '').strip
           elsif board?(text)
-            specs[:board] = text
+            specs[:board] = text.sub(/ Express/, '').strip
           elsif drive?(text)
             specs[:drive] = text
           elsif os?(text)
