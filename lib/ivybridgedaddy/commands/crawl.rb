@@ -43,6 +43,12 @@ module IvyBridgeDaddy
           case @task
           when "basic-model"
             @crawler.update_basic_models
+          when "custom"
+            @crawler.update_customs
+          else
+            if @task.start_with?("http")
+              @crawler.update_customs(model_urls(@task))
+            end
           end
         end
       end
