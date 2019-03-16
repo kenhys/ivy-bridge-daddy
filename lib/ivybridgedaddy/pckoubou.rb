@@ -27,7 +27,8 @@ module IvyBridgeDaddy
         while next_page
           next_page = false
           @driver.find_elements(:class_name => "container-item").each do |item|
-            specs = extract_model_spec(item)
+            model = ModelExtractor.new(item)
+            specs = model.parse
             timestamp = Time.now
             data = {
               maker: "pckoubou",
@@ -163,17 +164,74 @@ module IvyBridgeDaddy
         end
       end
 
-      private
-      def extract_price(text)
-        text.sub(/円\(税別\) ～/, '').sub(',', '').to_i
+      class ModelExtractor < self
+        def initialize(element, output = nil)
+          @output = output || @stdout
+          @element = element
+        end
+
+        def parse
+          specs = {
+            cpu: "",
+            memory: "",
+            storage: "",
+            graphic: "",
+            board: "",
+            drive: "",
+            os: "",
+            formfactor: "",
+            power: ""
+          }
+          specs[:code] = @element.find_element(:class_name => "item-code").text
+          specs[:catch_phrase] = @element.find_element(:class_name => "item-detail").text
+          # @element.find_element(:class_name => "product-name").text
+          name = @element.find_element(:class_name => "item-name").text
+          name = name.sub(/\nSALE/, "").sub(/\nNEW/, "")
+          specs[:name] = name
+          details = @element.find_elements(:class_name => "item-detail")
+          specs[:detail] = details[1].text
+          p @element.find_elements(:class_name => "item-detail")[0].text
+          p @element.find_elements(:class_name => "item-detail")[1].text
+          specs[:url] = @element.find_element(:class_name => "product-review").find_element(:tag_name => "a").attribute("href")
+          specs[:price] = extract_price(@element.find_element(:class_name => "price").text)
+          @element.find_elements(:class_name => "item-detail")[1].find_elements(:class_name => "bto_spec").each do |spec|
+            text = spec.text
+            if cpu?(text)
+              specs[:cpu] = text
+            elsif memory?(text)
+              specs[:memory] = text.sub(/\(.+?\)/, '')
+            elsif storage?(text)
+              specs[:storage] = text.sub(/Serial-ATA /, '')
+            elsif graphic?(text)
+              specs[:graphic] = text.sub(/ Graphics/, '').strip
+            elsif board?(text)
+              specs[:board] = text.sub(/ Express/, '').strip
+            elsif drive?(text)
+              specs[:drive] = text
+            elsif os?(text)
+              specs[:os] = "OSなし"
+            elsif formfactor?(text)
+              specs[:formfactor] = text
+            elsif power?(text)
+              specs[:power] = text
+            else
+              next if name == "STYLE-I0B6-i5T-UHS [OS LESS]" and text == "160W"
+              p "|#{spec.text}|"
+              raise StandardError
+            end
+          end
+          specs
+        end
+
       end
 
+      private
       def next_link?(tag)
         tag.tag_name == "a"
       end
 
       def extract_price(text)
-        text.sub(/円/, '').sub(',', '').to_i
+        text.sub(/円\(税別\) ～/, '').sub(',', '').to_i
       end
 
       def memory?(text)
@@ -230,56 +288,6 @@ module IvyBridgeDaddy
       end
 
       def extract_model_spec(item)
-        specs = {
-          cpu: "",
-          memory: "",
-          storage: "",
-          graphic: "",
-          board: "",
-          drive: "",
-          os: "",
-          formfactor: "",
-          power: ""
-        }
-        specs[:code] = item.find_element(:class_name => "item-code").text
-        specs[:catch_phrase] = item.find_element(:class_name => "item-detail").text
-        # item.find_element(:class_name => "product-name").text
-        name = item.find_element(:class_name => "item-name").text
-        name = name.sub(/\nSALE/, "").sub(/\nNEW/, "")
-        specs[:name] = name
-        details = item.find_elements(:class_name => "item-detail")
-        specs[:detail] = details[1].text
-        p item.find_elements(:class_name => "item-detail")[0].text
-        p item.find_elements(:class_name => "item-detail")[1].text
-        specs[:url] = item.find_element(:class_name => "product-review").find_element(:tag_name => "a").attribute("href")
-        specs[:price] = extract_price(item.find_element(:class_name => "price").text)
-        item.find_elements(:class_name => "item-detail")[1].find_elements(:class_name => "bto_spec").each do |spec|
-          text = spec.text
-          if cpu?(text)
-            specs[:cpu] = text
-          elsif memory?(text)
-            specs[:memory] = text.sub(/\(.+?\)/, '')
-          elsif storage?(text)
-            specs[:storage] = text.sub(/Serial-ATA /, '')
-          elsif graphic?(text)
-            specs[:graphic] = text.sub(/ Graphics/, '').strip
-          elsif board?(text)
-            specs[:board] = text.sub(/ Express/, '').strip
-          elsif drive?(text)
-            specs[:drive] = text
-          elsif os?(text)
-            specs[:os] = "OSなし"
-          elsif formfactor?(text)
-            specs[:formfactor] = text
-          elsif power?(text)
-            specs[:power] = text
-          else
-            next if name == "STYLE-I0B6-i5T-UHS [OS LESS]" and text == "160W"
-            p "|#{spec.text}|"
-            raise StandardError
-          end
-        end
-        specs
       end
     end
   end
