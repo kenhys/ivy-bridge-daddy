@@ -198,6 +198,47 @@ module IvyBridgeDaddy
         text.include?("メモリ")
       end
 
+      class ModelDetailExtractor < self
+        def initialize(table, output = nil)
+          @output = output || @stdout
+          @table = table
+        end
+
+        def parse
+          specs = {
+            cpu: "",
+            memory: "",
+            storage: "",
+            graphic: "",
+            board: "",
+            drive: "",
+            os: "",
+            formfactor: "",
+            power: ""
+          }
+          title = ""
+          value = ""
+          @table.find_elements(:tag_name => "tr").each do |tr|
+            begin
+              th = tr.find_element(:tag_name => "th")
+              title = th.text
+            rescue Selenium::WebDriver::Error::NoSuchElementError
+            end
+            begin
+              td = tr.find_element(:tag_name => "td")
+              value = td.text
+              case title
+              when "OS"
+                specs[:os] = value.sub(/ 64ビット/, '')
+              else
+                p title
+                p value
+              end
+            rescue Selenium::WebDriver::Error::NoSuchElementError
+            end
+          end
+        end
+      end
     end
   end
 end
