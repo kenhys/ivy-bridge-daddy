@@ -270,6 +270,7 @@ module IvyBridgeDaddy
         elsif text =~ /(DDR.+?) (\d+?)GB×(\d)\(.+\/計(\d+)GB\).+\[(.+)円\]/
           specs = {
             chip: $1,
+            module: to_memory_module($1),
             module_size: $2.to_i,
             module_count: $3.to_i,
             module_total: $4.to_i,
@@ -278,6 +279,7 @@ module IvyBridgeDaddy
         elsif text =~ /(DDR.+?) (\d+?)GB×(\d)\(計(\d)GB\).+\[(.+)円\]/
           specs = {
             chip: $1,
+            module: to_memory_module($1),
             module_size: $2.to_i,
             module_count: $3.to_i,
             module_total: $4.to_i,
@@ -285,6 +287,17 @@ module IvyBridgeDaddy
           }
         end
         specs
+      end
+
+      def to_memory_module(text)
+        case text
+        when "DDR4-2133"
+          "PC4-17000"
+        when "DDR4-2400"
+          "PC4-19200"
+        when "DDR4-2666"
+          "PC4-21300"
+        end
       end
 
       def extract_model_spec(item)
