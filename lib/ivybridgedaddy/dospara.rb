@@ -81,10 +81,10 @@ module IvyBridgeDaddy
               catch_phrase: model,
               url: url,
               detail: tbody.text,
-              created_at: timestamp,
               updated_at: timestamp,
               price: price
             }
+            data[:created_at] = timestamp unless @models.key?(model)
             data.merge!(specs)
             p data
             @models[model] = data
