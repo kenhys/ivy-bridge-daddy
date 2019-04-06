@@ -44,7 +44,32 @@ module IvyBridgeDaddy
         end
       end
 
+      def update_customs(urls=nil)
+        urls ||= custom_urls
+        urls.each do |key, url|
+          p url
+          @driver.get(url)
+          @wait.until do
+            @driver.find_element(:class_name => "specTable").displayed?
+          end
+          @driver.find_element(:class_name => "specTable") do |spec_table|
+            specs = extract_model_detail_spec(spec_table)
+          end
+        end
+      end
+
       private
+      def custom_urls
+        urls = {}
+        records = @models.select do |record|
+          record.maker == "dospara"
+        end
+        records.each do |record|
+          urls[record._key] = record.url
+        end
+        urls
+      end
+
       def extract_model_name(text)
         text.sub(/（.+）/, '')
       end
