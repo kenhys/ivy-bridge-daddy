@@ -120,9 +120,16 @@ module IvyBridgeDaddy
           @wait.until do
             @driver.find_element(:class_name => "product-config").displayed?
           end
+          memory_id = nil
           @driver.find_elements(:class_name => "product-config").each do |product_config|
             h3 = product_config.find_element(:tag_name => "h3")
             if h3.text == "メインメモリ"
+              memory_id = product_config.attribute("id")
+            end
+          end
+          next unless memory_id
+          product_config = @driver.find_element(:id => memory_id)
+          product_config.location_once_scrolled_into_view
               labels = product_config.find_elements(:xpath => "div/dl/dd/ul/li/label")
               if labels
                 labels.each do |label|
@@ -174,8 +181,6 @@ module IvyBridgeDaddy
                 }
                 @specs[key] = spec
               end
-            end
-          end
         end
       end
 
