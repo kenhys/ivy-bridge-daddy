@@ -4,6 +4,13 @@ require_relative "./crawler"
 module IvyBridgeDaddy
   module Crawler
     class PcKoubou < BaseCrawler
+
+      STORAGE_SET_M2SSD_HDD = 5
+      STORAGE_SET_M2SSD = 4
+      STORAGE_SET_SSD_HDD = 3
+      STORAGE_SET_SSD = 2
+      STORAGE_SET_HDD = 1
+
       def initialize
         @models = Groonga["Models"]
         @memories = Groonga["Memories"]
@@ -201,7 +208,15 @@ module IvyBridgeDaddy
             elsif memory?(text)
               specs[:memory] = text.sub(/\(.+?\)/, '')
             elsif storage?(text)
-              specs[:storage] = text.sub(/Serial-ATA /, '')
+              text = text.sub(/Serial-ATA /, '')
+              if text =~ /M\.2 SSD/
+                text = text.sub(/NVMe対応 /, '')
+              end
+              specs[:storage] = text
+              @storage = Groonga["Storages"]
+              @storage[text] = {
+                :type => to_storage_set(text)
+              }
             elsif graphic?(text)
               specs[:graphic] = text.sub(/ Graphics/, '').strip
             elsif board?(text)
@@ -223,6 +238,19 @@ module IvyBridgeDaddy
           specs
         end
 
+        def to_storage_set(text)
+          if text.include?("M.2") and text.include?("HDD")
+            STORAGE_SET_M2SSD_HDD
+          elsif text.include?("M.2")
+            STORAGE_SET_M2SSD
+          elsif text.include?("SSD") and text.include?("HDD")
+            STORAGE_SET_SSD_HDD
+          elsif text.include?("SSD")
+            STORAGE_SET_SSD
+          else
+            STORAGE_SET_HDD
+          end
+        end
       end
 
       private
