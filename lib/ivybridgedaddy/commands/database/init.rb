@@ -64,6 +64,7 @@ module IvyBridgeDaddy
               table.reference("os", "OperatingSystems")
               table.reference("formfactor", "FormFactors")
               table.reference("power", "Powers")
+              table.boolean("end_sale")
               table.time("created_at")
               table.time("updated_at")
             end
