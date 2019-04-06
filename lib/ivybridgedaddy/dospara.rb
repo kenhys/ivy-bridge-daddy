@@ -108,6 +108,45 @@ module IvyBridgeDaddy
         specs
       end
 
+      def extract_model_detail_spec(spec_table)
+        specs = {}
+        spec_table.find_elements(:tag_name => "tr").each do |tr|
+          th = tr.find_element(:tag_name => "th")
+          td = tr.find_element(:tag_name => "td")
+          title = th.text
+          case title
+          when "OS"
+            specs[:os] = td.text.sub(/ 64ビット/, '')
+          when "CPU"
+            if td.text =~ /.+(Core.+ )\s\(.+/
+              specs[:cpu] = $1
+            else
+              p td.text
+              raise StandardError
+            end
+          when "グラフィック"
+            case td.text
+            when "インテル UHDグラフィックス630 (CPU内蔵)"
+              specs[:graphic] = "UHD 630"
+            else
+              p td.text
+              raise StandardError
+            end
+          when "メモリ"
+            #8GB DDR4 SDRAM(PC4-21300/8GBx1)
+          when "ハードディスク"
+          when "SSD"
+            specs[:storage] = td.text
+          when "光学ドライブ"
+            specs[:drive] = "DVDスーパーマルチ" if td.text.include?("DVDスーパーマルチ")
+          when "マザーボード"
+            specs[:board] = "DVDスーパーマルチ" if td.text.include?("チップセット")
+          else
+            raise StandardError
+          end
+        end
+      end
+
       def extract_price(text)
         text.sub(/円\(\+税\)/, '').sub(',', '').to_i
       end
