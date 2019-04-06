@@ -151,7 +151,6 @@ module IvyBridgeDaddy
             # no options
             label = product_config.find_elements(:xpath => "div/dl/div/div[@class='p-fixed-name']")
             memory_specs = extract_memory_spec(label.text)
-            key = "#{model}_#{module_total}GB"
             update_specs_by_model(model, total_price, memory_specs)
           end
         end
