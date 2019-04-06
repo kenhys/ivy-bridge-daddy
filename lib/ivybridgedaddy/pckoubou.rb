@@ -133,7 +133,7 @@ module IvyBridgeDaddy
               memory_id = product_config.attribute("id")
             end
           end
-          next unless memory_id
+          p memory_id
           product_config = @driver.find_element(:id => memory_id)
           input = product_config.find_element(:tag_name => "input")
           unless input.attribute("type") == "hidden"
