@@ -53,6 +53,10 @@ module IvyBridgeDaddy
         "https://www.dospara.co.jp/5shopping/search.php?tg=2&tc=529"
       end
 
+      def all_round_model_url
+        "https://www.dospara.co.jp/5shopping/search.php?tg=2&tc=530"
+      end
+
       def update_models
         @driver.execute_script("TabOpen('list')")
         @driver.find_elements(:class_name => "itemSearchTable").each do |table|
