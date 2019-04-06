@@ -145,32 +145,14 @@ module IvyBridgeDaddy
               price = label.find_element(:tag_name => "input").attribute("data-price").to_i
               description = label.find_element(:class => "p-radio-name").text
               memory_specs = extract_memory_spec(description)
-              if memory_specs.empty?
-                p memory_specs
-                raise StandardError
-              end
-              key = "#{model}_#{memory_specs[:module_total]}GB"
-              data = {
-                model: model,
-                price: price
-              }
-              data.merge!(memory_specs)
-              p data
-              @memories[key] = data
-              timestamp = Time.now
-              spec = {
-                model: model,
-                memory: key,
-                price: total_price + price,
-                updated_at: timestamp
-              }
-              @specs[key] = spec
+              update_specs_by_model(model, total_price, memory_specs)
             end
           else
             # no options
             label = product_config.find_elements(:xpath => "div/dl/div/div[@class='p-fixed-name']")
             memory_specs = extract_memory_spec(label.text)
             key = "#{model}_#{module_total}GB"
+            update_specs_by_model(model, total_price, memory_specs)
             p key
             data = {
               model: model,
@@ -188,6 +170,29 @@ module IvyBridgeDaddy
             }
             @specs[key] = spec
           end
+        end
+
+        def update_specs_by_model(model, base_price, memory_specs)
+          if memory_specs.empty?
+            p memory_specs
+            raise StandardError
+          end
+          key = "#{model}_#{memory_specs[:module_total]}GB"
+          data = {
+            model: model,
+            price: price
+          }
+          data.merge!(memory_specs)
+          p data
+          @memories[key] = data
+          timestamp = Time.now
+          spec = {
+            model: model,
+            memory: key,
+            price: base_price + memory_specs[:price],
+            updated_at: timestamp
+          }
+          @specs[key] = spec
         end
       end
 
