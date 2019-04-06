@@ -25,6 +25,11 @@ module IvyBridgeDaddy
         update_models
       end
 
+      def update_all_round_models
+        @driver.navigate.to all_round_model_url
+        update_models
+      end
+
       def update_customs(urls=nil)
         urls ||= custom_urls
         urls.each do |key, url|

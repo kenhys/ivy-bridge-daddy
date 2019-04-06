@@ -45,6 +45,8 @@ module IvyBridgeDaddy
             @crawler.update_basic_models
           when "high-end-model", "highend"
             @crawler.update_high_end_models
+          when "all-round-model", "allround"
+            @crawler.update_all_round_models
           when "custom"
             @crawler.update_customs
           else
