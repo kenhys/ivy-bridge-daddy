@@ -140,7 +140,7 @@ module IvyBridgeDaddy
             input.location_once_scrolled_into_view
           end
           labels = product_config.find_elements(:xpath => "div/dl/dd/ul/li/label")
-          if labels
+          if labels.size > 0
             labels.each do |label|
               price = label.find_element(:tag_name => "input").attribute("data-price").to_i
               description = label.find_element(:class => "p-radio-name").text
