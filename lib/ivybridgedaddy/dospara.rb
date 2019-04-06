@@ -20,6 +20,11 @@ module IvyBridgeDaddy
         update_models
       end
 
+      def update_high_end_models
+        @driver.navigate.to high_end_model_url
+        update_models
+      end
+
       def update_customs(urls=nil)
         urls ||= custom_urls
         urls.each do |key, url|

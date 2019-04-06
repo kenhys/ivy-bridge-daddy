@@ -41,8 +41,10 @@ module IvyBridgeDaddy
         when "dospara"
           @crawler = ::IvyBridgeDaddy::Crawler::Dospara.new
           case @task
-          when "basic-model"
+          when "basic-model", "basic"
             @crawler.update_basic_models
+          when "high-end-model", "highend"
+            @crawler.update_high_end_models
           when "custom"
             @crawler.update_customs
           else
