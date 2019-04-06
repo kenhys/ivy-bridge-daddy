@@ -15,16 +15,19 @@ module IvyBridgeDaddy
                                   :output_columns => "_key,_score,model,price,memory.module_total,model.storage",
                                   :sort_keys => "_score,price",
                                   :limit => -1)
+        header = ["score", "price", "model", "memory", "storage"]
+        table = []
         records.each do |record|
-          entry = "%d %s %s %s %s" % [
+          entry = [
             record["_score"],
             record.price,
             record.model,
             record["memory.module_total"],
             record["model.storage"]
           ]
-          puts entry
+          table << entry
         end
+        puts TTY::Table.new(header, table).render(:unicode, alignment: [:right])
       end      
     end
   end
