@@ -32,6 +32,7 @@ module IvyBridgeDaddy
             schema.create_table("Memories", options = {:type => :patricia_trie}) do |table|
             end
             schema.create_table("Storages", options = {:type => :patricia_trie}) do |table|
+              table.integer("type")
             end
             schema.create_table("Graphics", options = {:type => :patricia_trie}) do |table|
             end
