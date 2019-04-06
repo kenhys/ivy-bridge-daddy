@@ -153,22 +153,6 @@ module IvyBridgeDaddy
             memory_specs = extract_memory_spec(label.text)
             key = "#{model}_#{module_total}GB"
             update_specs_by_model(model, total_price, memory_specs)
-            p key
-            data = {
-              model: model,
-              price: 0
-            }
-            data.merge!(memory_specs)
-            p data
-            @memories[key] = data
-            timestamp = Time.now
-            spec = {
-              model: model,
-              memory: key,
-              price: total_price,
-              updated_at: timestamp
-            }
-            @specs[key] = spec
           end
         end
 
