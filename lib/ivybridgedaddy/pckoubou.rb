@@ -105,7 +105,7 @@ module IvyBridgeDaddy
             button = @driver.find_element(:id => "item-sold-out")
             if button
               end_sale_by_url(url)
-              return
+              next
             end
           end
           button = @driver.find_elements(:class_name => "p-custom")[0]
