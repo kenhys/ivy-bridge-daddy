@@ -65,7 +65,7 @@ module IvyBridgeDaddy
             record.maker == "pckoubou"
           end
           records.each do |record|
-            if three_days_ago?(record.updated_at)
+            if three_days_ago?(record.updated_at) and record.end_sale == false
               urls[record._key] = record.url
             end
           end
