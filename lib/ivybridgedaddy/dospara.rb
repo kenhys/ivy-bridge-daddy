@@ -35,11 +35,19 @@ module IvyBridgeDaddy
         urls.each do |key, url|
           p url
           @driver.get(url)
+          begin
           @wait.until do
             @driver.find_element(:class_name => "specTable").displayed?
           end
           @driver.find_element(:class_name => "specTable") do |spec_table|
             specs = extract_model_detail_spec(spec_table)
+          end
+          rescue Selenium::WebDriver::Error::TimeOutError
+            @driver.find_element(:id => "endSaleWrapper") do |div|
+              if div.text =~ /販売を終了いたしました/
+                end_sale_by_url(url)
+              end
+            end
           end
         end
       end
@@ -94,6 +102,15 @@ module IvyBridgeDaddy
           urls[record._key] = record.url
         end
         urls
+      end
+
+      def end_sale_by_url(url)
+        dataset = @models.select do |record|
+          record.url == url
+        end
+        dataset.each do |record|
+          record.end_sale = true
+        end
       end
 
       def extract_model_name(text)
