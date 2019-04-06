@@ -11,7 +11,7 @@ module IvyBridgeDaddy
 
       def recommend
         records = @context.select(@specs,
-                                  :filter => "memory.module_total >= 16 ",
+                                  :filter => "memory.module_total >= 16 && model.storage.type >= 2",
                                   :output_columns => "_key,_score,model,price,memory.module_total,model.storage",
                                   :sort_keys => "_score,price",
                                   :limit => -1)
