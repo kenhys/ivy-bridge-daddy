@@ -91,7 +91,6 @@ module IvyBridgeDaddy
 
             schema.create_table("Specs", options = {:type => :patricia_trie}) do |table|
               table.reference("model", "Models")
-              table.reference("cpu", "Cpus")
               table.reference("memory", "Memories")
               table.integer("price")
               table.time("created_at")
