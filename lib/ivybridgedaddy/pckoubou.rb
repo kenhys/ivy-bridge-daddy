@@ -117,15 +117,13 @@ module IvyBridgeDaddy
           button = @driver.find_elements(:class_name => "p-custom")[0]
           button.click if button.displayed?
           @wait.until do
+            @driver.find_element(:class_name => "product-config").displayed?
+          end
+          @wait.until do
             @driver.find_element(:class_name => "p-total-body").displayed?
           end
           total_body = @driver.find_element(:class_name => "p-total-body")
-          p total_body.text
           total_price = extract_price(total_body.text)
-          p total_price
-          @wait.until do
-            @driver.find_element(:class_name => "product-config").displayed?
-          end
           memory_id = nil
           @driver.find_elements(:class_name => "product-config").each do |product_config|
             h3 = product_config.find_element(:tag_name => "h3")
