@@ -130,57 +130,57 @@ module IvyBridgeDaddy
           next unless memory_id
           product_config = @driver.find_element(:id => memory_id)
           product_config.location_once_scrolled_into_view
-              labels = product_config.find_elements(:xpath => "div/dl/dd/ul/li/label")
-              if labels
-                labels.each do |label|
-                  price = label.find_element(:tag_name => "input").attribute("data-price").to_i
-                  description = label.find_element(:class => "p-radio-name").text
-                  p description
-                  p price
+          labels = product_config.find_elements(:xpath => "div/dl/dd/ul/li/label")
+          if labels
+            labels.each do |label|
+              price = label.find_element(:tag_name => "input").attribute("data-price").to_i
+              description = label.find_element(:class => "p-radio-name").text
+              p description
+              p price
 
-                  memory_specs = extract_memory_spec(description)
-                  if memory_specs.empty?
-                    p memory_specs
-                    raise StandardError
-                  end
-                  key = "#{model}_#{memory_specs[:module_total]}GB"
-                  data = {
-                    model: model,
-                    price: price
-                  }
-                  data.merge!(memory_specs)
-                  p key
-                  p data
-                  @memories[key] = data
-                  spec = {
-                    model: model,
-                    memory: key,
-                    price: total_price + price,
-                  }
-                  p key
-                  p spec
-                  @specs[key] = spec
-                end
-              else
-                # no options
-                label = product_config.find_elements(:xpath => "div/dl/div/div[@class='p-fixed-name']")
-                memory_specs = extract_memory_spec(label.text)
-                key = "#{model}_#{module_total}GB"
-                p key
-                data = {
-                  model: model,
-                  price: 0
-                }
-                data.merge!(memory_specs)
-                p data
-                @memories[key] = data
-                spec = {
-                  model: model,
-                  memory: key,
-                  price: total_price,
-                }
-                @specs[key] = spec
+              memory_specs = extract_memory_spec(description)
+              if memory_specs.empty?
+                p memory_specs
+                raise StandardError
               end
+              key = "#{model}_#{memory_specs[:module_total]}GB"
+              data = {
+                model: model,
+                price: price
+              }
+              data.merge!(memory_specs)
+              p key
+              p data
+              @memories[key] = data
+              spec = {
+                model: model,
+                memory: key,
+                price: total_price + price,
+              }
+              p key
+              p spec
+              @specs[key] = spec
+            end
+          else
+            # no options
+            label = product_config.find_elements(:xpath => "div/dl/div/div[@class='p-fixed-name']")
+            memory_specs = extract_memory_spec(label.text)
+            key = "#{model}_#{module_total}GB"
+            p key
+            data = {
+              model: model,
+              price: 0
+            }
+            data.merge!(memory_specs)
+            p data
+            @memories[key] = data
+            spec = {
+              model: model,
+              memory: key,
+              price: total_price,
+            }
+            @specs[key] = spec
+          end
         end
       end
 
