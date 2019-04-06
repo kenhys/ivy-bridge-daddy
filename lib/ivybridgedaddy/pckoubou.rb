@@ -32,9 +32,9 @@ module IvyBridgeDaddy
             timestamp = Time.now
             data = {
               maker: "pckoubou",
-              created_at: timestamp,
               updated_at: timestamp
             }
+            data[:created_at] = timestamp unless @models.key?(specs[:name])
             data.merge!(specs)
             p data
             @models[specs[:name]] = data
