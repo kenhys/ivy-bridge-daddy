@@ -176,10 +176,12 @@ module IvyBridgeDaddy
             data.merge!(memory_specs)
             p data
             @memories[key] = data
+            timestamp = Time.now
             spec = {
               model: model,
               memory: key,
               price: total_price,
+              updated_at: timestamp
             }
             @specs[key] = spec
           end
