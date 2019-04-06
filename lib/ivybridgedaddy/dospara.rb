@@ -16,7 +16,7 @@ module IvyBridgeDaddy
       end
 
       def update_basic_models
-        @driver.navigate.to "https://www.dospara.co.jp/5shopping/search.php?tg=2&tc=531"
+        @driver.navigate.to basic_model_url
 
         @driver.execute_script("TabOpen('list')")
         @driver.find_elements(:class_name => "itemSearchTable").each do |table|
@@ -59,6 +59,10 @@ module IvyBridgeDaddy
       end
 
       private
+      def basic_model_url
+        "https://www.dospara.co.jp/5shopping/search.php?tg=2&tc=531"
+      end
+
       def custom_urls
         urls = {}
         records = @models.select do |record|
