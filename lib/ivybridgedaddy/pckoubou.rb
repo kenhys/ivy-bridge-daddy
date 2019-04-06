@@ -152,10 +152,12 @@ module IvyBridgeDaddy
               p key
               p data
               @memories[key] = data
+              timestamp = Time.now
               spec = {
                 model: model,
                 memory: key,
                 price: total_price + price,
+                updated_at: timestamp
               }
               p key
               p spec
