@@ -12,16 +12,17 @@ module IvyBridgeDaddy
       def recommend
         records = @context.select(@specs,
                                   :filter => "memory.module_total >= 16 && model.storage.type >= 2",
-                                  :output_columns => "_key,_score,model,price,memory.module_total,model.storage",
+                                  :output_columns => "_key,_score,model,price,memory.module_total,model.storage,model.cpu",
                                   :sort_keys => "_score,price",
                                   :limit => -1)
-        header = ["score", "price", "model", "memory", "storage"]
+        header = ["score", "price", "model", "cpu", "memory", "storage"]
         table = []
         records.each do |record|
           entry = [
             record["_score"],
             record.price,
             record.model,
+            record["model.cpu"],
             record["memory.module_total"],
             record["model.storage"]
           ]
