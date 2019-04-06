@@ -87,7 +87,8 @@ module IvyBridgeDaddy
       def custom_urls
         urls = {}
         records = @models.select do |record|
-          record.maker == "dospara"
+          record.maker == "dospara" and
+          record.end_sale == false
         end
         records.each do |record|
           urls[record._key] = record.url
