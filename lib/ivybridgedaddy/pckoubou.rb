@@ -135,9 +135,6 @@ module IvyBridgeDaddy
             labels.each do |label|
               price = label.find_element(:tag_name => "input").attribute("data-price").to_i
               description = label.find_element(:class => "p-radio-name").text
-              p description
-              p price
-
               memory_specs = extract_memory_spec(description)
               if memory_specs.empty?
                 p memory_specs
@@ -149,7 +146,6 @@ module IvyBridgeDaddy
                 price: price
               }
               data.merge!(memory_specs)
-              p key
               p data
               @memories[key] = data
               timestamp = Time.now
@@ -159,8 +155,6 @@ module IvyBridgeDaddy
                 price: total_price + price,
                 updated_at: timestamp
               }
-              p key
-              p spec
               @specs[key] = spec
             end
           else
