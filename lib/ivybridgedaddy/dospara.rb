@@ -17,7 +17,33 @@ module IvyBridgeDaddy
 
       def update_basic_models
         @driver.navigate.to basic_model_url
+        update_models
+      end
 
+      def update_customs(urls=nil)
+        urls ||= custom_urls
+        urls.each do |key, url|
+          p url
+          @driver.get(url)
+          @wait.until do
+            @driver.find_element(:class_name => "specTable").displayed?
+          end
+          @driver.find_element(:class_name => "specTable") do |spec_table|
+            specs = extract_model_detail_spec(spec_table)
+          end
+        end
+      end
+
+      private
+      def basic_model_url
+        "https://www.dospara.co.jp/5shopping/search.php?tg=2&tc=531"
+      end
+
+      def high_end_model_url
+        "https://www.dospara.co.jp/5shopping/search.php?tg=2&tc=529"
+      end
+
+      def update_models
         @driver.execute_script("TabOpen('list')")
         @driver.find_elements(:class_name => "itemSearchTable").each do |table|
           table.find_elements(:tag_name => "tbody").each do |tbody|
@@ -42,25 +68,6 @@ module IvyBridgeDaddy
             @models[model] = data
           end
         end
-      end
-
-      def update_customs(urls=nil)
-        urls ||= custom_urls
-        urls.each do |key, url|
-          p url
-          @driver.get(url)
-          @wait.until do
-            @driver.find_element(:class_name => "specTable").displayed?
-          end
-          @driver.find_element(:class_name => "specTable") do |spec_table|
-            specs = extract_model_detail_spec(spec_table)
-          end
-        end
-      end
-
-      private
-      def basic_model_url
-        "https://www.dospara.co.jp/5shopping/search.php?tg=2&tc=531"
       end
 
       def custom_urls
