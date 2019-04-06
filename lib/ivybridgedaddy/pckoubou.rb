@@ -154,29 +154,30 @@ module IvyBridgeDaddy
             update_specs_by_model(model, total_price, memory_specs)
           end
         end
+      end
 
-        def update_specs_by_model(model, base_price, memory_specs)
-          if memory_specs.empty?
-            p memory_specs
-            raise StandardError
-          end
-          key = "#{model}_#{memory_specs[:module_total]}GB"
-          data = {
-            model: model,
-            price: price
-          }
-          data.merge!(memory_specs)
-          p data
-          @memories[key] = data
-          timestamp = Time.now
-          spec = {
-            model: model,
-            memory: key,
-            price: base_price + memory_specs[:price],
-            updated_at: timestamp
-          }
-          @specs[key] = spec
+      def update_specs_by_model(model, base_price, memory_specs)
+        if memory_specs.empty?
+          p memory_specs
+          raise StandardError
         end
+        key = "#{model}_#{memory_specs[:module_total]}GB"
+        data = {
+          model: model,
+          price: memory_specs[:price]
+        }
+        data.merge!(memory_specs)
+        p data
+        @memories[key] = data
+        timestamp = Time.now
+        spec = {
+          model: model,
+          memory: key,
+          price: base_price + memory_specs[:price],
+          updated_at: timestamp
+        }
+        p spec
+        @specs[key] = spec
       end
 
       class ModelExtractor < self
