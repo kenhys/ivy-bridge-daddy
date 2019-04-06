@@ -54,6 +54,10 @@ module IvyBridgeDaddy
         end
       end
 
+      def three_days_ago?(timestamp)
+        Time.now - timestamp > 60 * 60 * 24 * 3
+      end
+
       def update_customs(urls=nil)
         unless urls
           urls = {}
@@ -61,7 +65,9 @@ module IvyBridgeDaddy
             record.maker == "pckoubou"
           end
           records.each do |record|
-            urls[record._key] = record.url
+            if three_days_ago?(record.updated_at)
+              urls[record._key] = record.url
+            end
           end
         end
         urls.each do |key, url|
