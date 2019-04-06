@@ -36,12 +36,12 @@ module IvyBridgeDaddy
           p url
           @driver.get(url)
           begin
-          @wait.until do
-            @driver.find_element(:class_name => "specTable").displayed?
-          end
-          @driver.find_element(:class_name => "specTable") do |spec_table|
-            specs = extract_model_detail_spec(spec_table)
-          end
+            @wait.until do
+              @driver.find_element(:class_name => "specTable").displayed?
+            end
+            @driver.find_element(:class_name => "specTable") do |spec_table|
+              specs = extract_model_detail_spec(spec_table)
+            end
           rescue Selenium::WebDriver::Error::TimeOutError
             @driver.find_element(:id => "endSaleWrapper") do |div|
               if div.text =~ /販売を終了いたしました/
