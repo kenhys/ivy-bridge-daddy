@@ -97,8 +97,16 @@ module IvyBridgeDaddy
           title = tab.find_element(:xpath => "div/div/div[@class='bold']")
           model = title.text if title
 
+          begin
           @wait.until do
             @driver.find_elements(:class_name => "p-custom")[0].displayed?
+          end
+          rescue NoMethodError
+            button = @driver.find_element(:id => "item-sold-out")
+            if button
+              end_sale_by_url(url)
+              return
+            end
           end
           button = @driver.find_elements(:class_name => "p-custom")[0]
           button.click if button.displayed?
@@ -341,6 +349,15 @@ module IvyBridgeDaddy
       end
 
       def extract_model_spec(item)
+      end
+
+      def end_sale_by_url(url)
+        dataset = @models.select do |record|
+          record.url == url
+        end
+        dataset.each do |record|
+          record.end_sale = true
+        end
       end
     end
   end
