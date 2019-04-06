@@ -129,7 +129,7 @@ module IvyBridgeDaddy
           end
           next unless memory_id
           product_config = @driver.find_element(:id => memory_id)
-          product_config.location_once_scrolled_into_view
+          product_config.find_element(:tag_name => "input").location_once_scrolled_into_view
           labels = product_config.find_elements(:xpath => "div/dl/dd/ul/li/label")
           if labels
             labels.each do |label|
