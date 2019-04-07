@@ -201,6 +201,66 @@ module IvyBridgeDaddy
         text.include?("メモリ")
       end
 
+      class ModelCustomExtractor < self
+        def initialize(driver, output = nil)
+          @output = output || @stdout
+          @driver = driver
+          @wait = Selenium::WebDriver::Wait.new(:timeout => 20)
+        end
+
+        def parse_memory_spec
+          specs = []
+          memory_customize_id = "contentitem_cus_0000000184"
+          @wait.until do
+            @driver.find_element(:id => memory_customize_id).displayed?
+          end
+          table = @driver.find_element(:id => memory_customize_id).find_element(:class_name => "c-parts-table")
+          table.find_elements(:tag_name  => "tr").each do |tr|
+            cell_title = tr.find_element(:class_name => "cell-title").text
+            cell_price = tr.find_element(:class_name => "cell-price").text
+            memory_specs = extract_memory_spec(cell_title)
+            memory_specs[:price] = extract_price(cell_price)
+            specs << memory_specs
+          end
+          specs
+        end
+
+        def parse_basic_price
+          id = "totalamt2"
+          @wait.until do
+            @driver.find_element(:id => id).displayed?
+          end
+          price_text = @driver.find_element(:id => id)
+          price_text.sub(/,/, '').to_i
+        end
+
+        private
+        def extract_memory_spec(text)
+          specs = {}
+          if text =~ /(.+)GB (DDR4.+)\((PC4.+)\/(\d)GBx(\d)(\/.+)?\)/
+            specs = {
+              chip: to_memory_chip($3),
+              module: $3,
+              module_size: $4.to_i,
+              module_count: $5.to_i,
+              module_total: $1.to_i
+            }
+          end
+          specs
+        end
+
+        def extract_price(text)
+          price = 0
+          text = text.sub(/,/, '')
+          if text =~ /\+(\d+)円\(\+税\)/
+            price = $1.to_i
+          elsif text =~ /\-(\d+)円\(\+税\)/
+            price = - $1.to_i
+          end
+          price
+        end
+      end
+
       class ModelDetailExtractor < self
         def initialize(table, output = nil)
           @output = output || @stdout
