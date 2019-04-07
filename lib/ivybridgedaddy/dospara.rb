@@ -136,9 +136,15 @@ module IvyBridgeDaddy
           record.end_sale == false
         end
         records.each do |record|
-          urls[record._key] = record.url
+          if outdated?(record)
+            urls[record._key] = record.url
+          end
         end
         urls
+      end
+
+      def outdated?(record)
+        Time.now - record["updated_at"] > 60 * 30
       end
 
       def end_sale_by_url(url)
