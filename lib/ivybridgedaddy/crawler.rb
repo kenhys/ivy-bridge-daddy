@@ -86,6 +86,15 @@ module IvyBridgeDaddy
           "PC4-34100"
         end
       end
+
+      def extract_drive_spec(text)
+        spec = ""
+        if text.include?("DVDスーパーマルチドライブ")
+          "DVDスーパーマルチ"
+        else
+          spec
+        end
+      end
     end
   end
 end
