@@ -362,6 +362,8 @@ module IvyBridgeDaddy
             spec = $1
           elsif text =~ /.+(Celeron.+)\s\(.+/
             spec = $1
+          elsif text =~ /.+(Ryzen.+)\s\(.+/
+            spec = $1
           else
             p text
             raise StandardError
