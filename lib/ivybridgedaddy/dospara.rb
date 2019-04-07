@@ -202,6 +202,7 @@ module IvyBridgeDaddy
             raise StandardError
           end
         end
+        specs
       end
 
       def extract_price(text)
