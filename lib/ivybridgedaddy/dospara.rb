@@ -45,6 +45,29 @@ module IvyBridgeDaddy
             extractor = ModelDetailExtractor.new(spec_table)
             specs = extractor.parse
             p specs
+            input = @driver.find_element(:id => "configChangeBtnBox").find_element(:tag_name => "input")
+            input.location_once_scrolled_into_view
+            input.click
+            custom = ModelCustomExtractor.new(@driver)
+            memory_specs = custom.parse_memory_spec
+            basic_price = custom.parse_basic_price
+            memory_specs.each do |memory_spec|
+              model = find_model_by_url(url)
+              memory_spec[:model] = model
+              key = "#{model}_#{memory_spec[:module_total]}GB"
+              p memory_spec
+              @memories[key] = memory_spec
+              timestamp = Time.now
+              data = {
+                model: model,
+                price: basic_price + memory_spec[:price],
+                memory: key,
+                updated_at: timestamp
+              }
+              data[:created_at] = timestamp unless @specs.key?(key)
+              p data
+              @specs[key] = data
+            end
           rescue Selenium::WebDriver::Error::TimeOutError
             @driver.find_element(:id => "endSaleWrapper") do |div|
               if div.text =~ /販売を終了いたしました/
