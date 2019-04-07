@@ -151,7 +151,7 @@ module IvyBridgeDaddy
       end
 
       def extract_model_name(text)
-        text.sub(/（.+）/, '')
+        text.sub(/（.+）/, '').strip
       end
 
       def extract_model_spec(item)
