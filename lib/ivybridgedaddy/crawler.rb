@@ -40,6 +40,29 @@ module IvyBridgeDaddy
       def power?(text)
         text.include?("電源")
       end
+
+      def to_memory_chip(text)
+        case text
+        when "PC4-17000"
+          "DDR4-2133"
+        when "PC4-19200"
+          "DDR4-2400"
+        when "PC4-21300"
+          "DDR4-2666"
+        when "PC4-22400"
+          "DDR4-2800"
+        when "PC4-23466"
+          "DDR4-2933"
+        when "PC4-25600"
+          "DDR4-3200"
+        when "PC4-27200"
+          "DDR4-3400"
+        when "PC4-28800"
+          "DDR4-3600"
+        when "PC4-34100"
+          "DDR4-4266"
+        end
+      end
     end
   end
 end
