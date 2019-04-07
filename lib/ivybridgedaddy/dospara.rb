@@ -279,23 +279,19 @@ module IvyBridgeDaddy
             formfactor: "",
             power: ""
           }
-          title = ""
-          value = ""
+          caption = ""
+          spec = ""
           @table.find_elements(:tag_name => "tr").each do |tr|
             begin
               th = tr.find_element(:tag_name => "th")
-              title = th.text
+              caption = th.text
             rescue Selenium::WebDriver::Error::NoSuchElementError
             end
             begin
               td = tr.find_element(:tag_name => "td")
-              value = td.text
-              case title
+              spec = td.text
+              case caption
               when "OS"
-                specs[:os] = value.sub(/ 64ビット/, '')
-              else
-                p title
-                p value
               end
             rescue Selenium::WebDriver::Error::NoSuchElementError
             end
