@@ -114,6 +114,7 @@ module IvyBridgeDaddy
             specs = extract_model_spec(tbody)
             timestamp = Time.now
             p specs
+            specs[:memory] = "#{model}_#{specs[:memory]}"
             data = {
               maker: "dospara",
               name: model,
