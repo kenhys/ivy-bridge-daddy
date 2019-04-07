@@ -230,8 +230,8 @@ module IvyBridgeDaddy
           @wait.until do
             @driver.find_element(:id => id).displayed?
           end
-          price_text = @driver.find_element(:id => id)
-          price_text.sub(/,/, '').to_i
+          price_label = @driver.find_element(:id => id).text
+          price_label.sub(/,/, '').to_i
         end
 
         private
