@@ -300,6 +300,68 @@ module IvyBridgeDaddy
             rescue Selenium::WebDriver::Error::NoSuchElementError
             end
           end
+        def extract_os_spec(text)
+          text.sub(/ 64ビット/, '')
+        end
+
+        def extract_cpu_spec(text)
+          spec = text
+          if text =~ /.+(Core.+)\s\(.+/
+            spec = $1
+          elsif text =~ /.+(Celeron.+)\s\(.+/
+            spec = $1
+          else
+            p text
+            raise StandardError
+          end
+          spec
+        end
+
+        def extract_graphic_spec(text)
+          if text.include?("UHDグラフィックス630")
+            "UHD 630"
+          elsif text.include?("UHDグラフィックス610")
+            "UHD 610"
+          else
+            p text
+            raise StandardError
+          end
+        end
+
+        def extract_memory_spec(text)
+          specs = {}
+          if text =~ /(.+)GB (DDR4.+)\((PC4.+)\/(\d)GBx(\d)/
+            specs = {
+              chip: to_memory_chip($1),
+              module: $3,
+              module_size: $4.to_i,
+              module_count: $5.to_i,
+              module_total: $1.to_i
+            }
+          end
+          specs
+        end
+
+        def extract_board_spec(text)
+          spec = ""
+          if text =~ /インテル (.+) チップセット/
+            spec = $1
+          else
+            p text
+            raise StandardError
+          end
+          spec
+        end
+
+        def extract_formfactor_spec(text)
+          spec = ""
+          if text =~ /.+ \((.*?ATX)\)/
+            spec = $1
+          else
+            p text
+            raise StandardError
+          end
+          spec
         end
       end
     end
