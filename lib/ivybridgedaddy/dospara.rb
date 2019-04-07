@@ -402,7 +402,7 @@ module IvyBridgeDaddy
           spec = ""
           if text =~ /インテル (.+) チップセット/
             spec = $1
-          if text =~ /AMD (.+) チップセット/
+          elsif text =~ /AMD (.+) チップセット/
             spec = $1
           else
             p text
