@@ -376,6 +376,8 @@ module IvyBridgeDaddy
             "UHD 630"
           elsif text.include?("UHDグラフィックス610")
             "UHD 610"
+          elsif text =~ /(.+)\s\(.+\)/
+            $1
           else
             p text
             raise StandardError
