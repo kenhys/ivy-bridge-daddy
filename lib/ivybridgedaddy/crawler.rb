@@ -3,6 +3,12 @@ module IvyBridgeDaddy
   module Crawler
     class BaseCrawler
 
+      STORAGE_SET_M2SSD_HDD = 5
+      STORAGE_SET_M2SSD = 4
+      STORAGE_SET_SSD_HDD = 3
+      STORAGE_SET_SSD = 2
+      STORAGE_SET_HDD = 1
+
       def cpu?(text)
         text.start_with?("Ryzen") or
           text.start_with?("Celeron") or
@@ -84,6 +90,20 @@ module IvyBridgeDaddy
           "PC4-28800"
         when "DDR4-4266"
           "PC4-34100"
+        end
+      end
+
+      def to_storage_type(text)
+        if text.include?("M.2") and text.include?("HDD")
+          STORAGE_SET_M2SSD_HDD
+        elsif text.include?("M.2")
+          STORAGE_SET_M2SSD
+        elsif text.include?("SSD") and text.include?("HDD")
+          STORAGE_SET_SSD_HDD
+        elsif text.include?("SSD")
+          STORAGE_SET_SSD
+        else
+          STORAGE_SET_HDD
         end
       end
 
