@@ -8,6 +8,7 @@ module IvyBridgeDaddy
         @models = Groonga["Models"]
         @memories = Groonga["Memories"]
         @specs = Groonga["Specs"]
+        @storages = Groonga["Storages"]
         options = Selenium::WebDriver::Firefox::Options.new
         #options.add_argument('-headless')
 
@@ -115,6 +116,9 @@ module IvyBridgeDaddy
             timestamp = Time.now
             p specs
             specs[:memory] = "#{model}_#{specs[:memory]}"
+            @storages[specs[:storage]] = {
+              :type => to_storage_type(specs[:storage])
+            }
             data = {
               maker: "dospara",
               name: model,
