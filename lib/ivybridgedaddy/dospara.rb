@@ -164,7 +164,7 @@ module IvyBridgeDaddy
           when "OS"
             specs[:os] = td.text.sub(/ 64ビット/, '')
           when "CPU"
-            if td.text =~ /.+(Core.+ )\s\(.+/
+            if td.text =~ /.+(Core.+)\s\(.+/
               specs[:cpu] = $1
             else
               p td.text
