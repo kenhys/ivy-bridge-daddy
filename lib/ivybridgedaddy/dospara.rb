@@ -111,6 +111,7 @@ module IvyBridgeDaddy
           table.find_elements(:tag_name => "tbody").each do |tbody|
             url = tbody.find_element(:xpath => "tr/td/a").attribute("href")
             model = extract_model_name(tbody.find_element(:xpath => "tr/td/a").text)
+            next if model.include?("中古")
             price = extract_price(tbody.find_element(:class => "price").text)
             specs = extract_model_spec(tbody)
             timestamp = Time.now
