@@ -292,10 +292,31 @@ module IvyBridgeDaddy
               spec = td.text
               case caption
               when "OS"
+                specs[:os] = extract_os_spec(spec)
+              when "CPU"
+                specs[:cpu] = extract_cpu_spec(spec)
+              when "グラフィック機能"
+                specs[:graphic] = extract_graphic_spec(spec)
+              when "メモリ"
+                memory = extract_memory_spec(spec)
+                specs[:memory] = "#{memory[:module_total]}GB"
+              when "ハードディスク/SSD"
+                specs[:storage] = spec
+              when "SSD"
+                specs[:storage] = spec
+              when "光学ドライブ"
+                specs[:drive] = extract_drive_spec(spec)
+              when "マザーボード"
+                specs[:board] = extract_board_spec(spec)
+              when "電源"
+                specs[:power] = spec
               end
             rescue Selenium::WebDriver::Error::NoSuchElementError
             end
           end
+          p specs
+        end
+
         def extract_os_spec(text)
           text.sub(/ 64ビット/, '')
         end
