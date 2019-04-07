@@ -68,6 +68,8 @@ module IvyBridgeDaddy
               p data
               @specs[key] = data
             end
+          rescue Selenium::WebDriver::Error::NoSuchElementError
+            end_sale_by_url(url)
           rescue Selenium::WebDriver::Error::TimeOutError
             @driver.find_element(:id => "endSaleWrapper") do |div|
               if div.text =~ /販売を終了いたしました/
