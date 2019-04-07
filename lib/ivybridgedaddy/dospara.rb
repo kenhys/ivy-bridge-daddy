@@ -272,7 +272,7 @@ module IvyBridgeDaddy
         private
         def extract_memory_spec(text)
           specs = {}
-          if text =~ /(.+)GB (DDR4.+)\((PC4.+)\/(\d)GBx(\d)(\/.+)?\)/
+          if text =~ /(.+)GB (DDR4.+)\((PC4.+)\/(\d+)GBx(\d)(\/.+)?\)/
             specs = {
               chip: to_memory_chip($3),
               module: $3,
@@ -386,7 +386,7 @@ module IvyBridgeDaddy
 
         def extract_memory_spec(text)
           specs = {}
-          if text =~ /(.+)GB (DDR4.+)\((PC4.+)\/(\d)GBx(\d)/
+          if text =~ /(.+)GB (DDR4.+)\((PC4.+)\/(\d+)GBx(\d)/
             specs = {
               chip: to_memory_chip($1),
               module: $3,
