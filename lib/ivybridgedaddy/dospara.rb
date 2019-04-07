@@ -194,7 +194,7 @@ module IvyBridgeDaddy
       end
 
       def extract_price(text)
-        text.sub(/円\(\+税\)/, '').sub(',', '').to_i
+        text.sub(/,/, '').sub(/円\(\+税\)/, '').sub(',', '').to_i
       end
 
       def memory?(text)
