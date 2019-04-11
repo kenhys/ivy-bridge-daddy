@@ -30,6 +30,18 @@ module IvyBridgeDaddy
       end
     end
 
+    desc 'recommend [OPTION]', 'Command description...'
+    method_option :help, aliases: '-h', type: :boolean,
+                         desc: 'Display usage information'
+    def recommend(option=nil)
+      if options[:help]
+        invoke :help, ['recommend']
+      else
+        require_relative 'commands/recommend'
+        IvyBridgeDaddy::Commands::Recommend.new(option, options).execute
+      end
+    end
+
     desc 'crawl SITE [TASK]', 'Command description...'
     method_option :help, aliases: '-h', type: :boolean,
                          desc: 'Display usage information'

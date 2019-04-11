@@ -2,9 +2,9 @@
 
 require_relative '../command'
 
-module Ivybridgedaddy
+module IvyBridgeDaddy
   module Commands
-    class Recommend < Ivybridgedaddy::Command
+    class Recommend < IvyBridgeDaddy::Command
       def initialize(option, options)
         @option = option
         @options = options

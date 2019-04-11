@@ -1,12 +1,12 @@
 require 'test_helper'
 require 'ivybridgedaddy/commands/recommend'
 
-class Ivybridgedaddy::Commands::RecommendTest < Minitest::Test
+class IvyBridgeDaddy::Commands::RecommendTest < Test::Unit::TestCase
   def test_executes_ivybridgedaddy_help_recommend_command_successfully
-    output = `ivybridgedaddy help recommend`
+    output = `bundle exec ivy-bridge-daddyhelp recommend`
     expected_output = <<-OUT
 Usage:
-  ivybridgedaddy recommend [OPTION]
+  ivy-bridge-daddy recommend [OPTION]
 
 Options:
   -h, [--help], [--no-help]  # Display usage information
